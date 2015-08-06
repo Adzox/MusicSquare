@@ -1,0 +1,12 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="project.tddd80.keval992.liu.ida.se.navigationbase.fragments.ModelListFragment">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/model_list_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</FrameLayout>
