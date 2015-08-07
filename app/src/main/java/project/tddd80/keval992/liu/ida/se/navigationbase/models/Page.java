@@ -13,8 +13,6 @@ import project.tddd80.keval992.liu.ida.se.navigationbase.utils.ImageLoader;
  */
 public class Page implements Serializable {
 
-    private final static ModelCache<Page> pages = new ModelCache<>(ModelCache.CACHE_SIZE);
-
     private final int id;
     private String type;
     private String name;
@@ -45,11 +43,6 @@ public class Page implements Serializable {
         this.hasUserFavorited = hasUserFavorited;
         this.genres = genres;
         this.members = members;
-        pages.put(id, this);
-    }
-
-    public static Page getReferenceTo(int pageId) {
-        return pages.get(pageId);
     }
 
     public int getId() {

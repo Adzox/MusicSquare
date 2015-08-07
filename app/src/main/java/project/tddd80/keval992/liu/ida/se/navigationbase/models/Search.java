@@ -14,8 +14,6 @@ import project.tddd80.keval992.liu.ida.se.navigationbase.utils.ImageLoader;
  */
 public class Search implements Serializable {
 
-    private final static ModelCache<Search> search = new ModelCache<>(ModelCache.CACHE_SIZE);
-
     private int id;
     private String kind;
     private String name;
@@ -37,11 +35,6 @@ public class Search implements Serializable {
         this.type = type;
         this.location = location;
         this.profilePath = profilePath;
-        search.put(id, this);
-    }
-
-    public static Search getReferenceTo(int id) {
-        return search.get(id);
     }
 
     public int getId() {

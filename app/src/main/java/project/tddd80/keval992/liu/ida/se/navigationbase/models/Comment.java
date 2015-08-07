@@ -7,43 +7,34 @@ import java.io.Serializable;
  */
 public class Comment implements Serializable {
 
-    private final static ModelCache<Comment> comments = new ModelCache<>(ModelCache.CACHE_SIZE);
-
     private final int id;
-    private final int postId;
     private final String dateSent;
-    private final int senderId; //user id
     private final String message;
     private Post post;
     private User sender;
 
-    public Comment(int id, int pageId, String dateSent, int senderId, String message) {
+    public Comment(int id, Post page, String dateSent, User sender, String message) {
         this.id = id;
-        this.postId = pageId;
+        this.post = page;
         this.dateSent = dateSent;
-        this.senderId = senderId;
+        this.sender = sender;
         this.message = message;
-        comments.put(id, this);
-    }
-
-    public static Comment getReferenceTo(int id) {
-        return comments.get(id);
     }
 
     public int getId() {
         return id;
     }
 
-    public int getPostId() {
-        return postId;
+    public Post getPost() {
+        return post;
     }
 
     public String getDateSent() {
         return dateSent;
     }
 
-    public int getSenderId() {
-        return senderId;
+    public User getSender() {
+        return sender;
     }
 
     public String getMessage() {

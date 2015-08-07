@@ -27,7 +27,7 @@ public class CardViewModel implements Serializable {
     private Search search;
 
     public CardViewModel(User user) {
-        title = BaseUser.getReferenceTo(user.getUserId()).getName();
+        title = user.getBaseUser().getName();
         subtitle = "";
         content = "";
         extra = user.getLocation();
@@ -45,9 +45,9 @@ public class CardViewModel implements Serializable {
     }
 
     public CardViewModel(Post post) {
-        User user = User.getReferenceTo(post.getUserId());
-        title = BaseUser.getReferenceTo(user.getUserId()).getName();
-        subtitle = "in " + Page.getReferenceTo(post.getOwnerId()).getName();
+        User user = post.getSender();
+        title = user.getBaseUser().getName();
+        subtitle = "in " + post.getOwner().getName();
         content = post.getMessage();
         extra = post.getDateSent();
         this.savedUser = user;
@@ -55,8 +55,8 @@ public class CardViewModel implements Serializable {
     }
 
     public CardViewModel(Comment comment) {
-        title = BaseUser.getReferenceTo(comment.getSenderId()).getName();
-        subtitle = "in " + Page.getReferenceTo(comment.getPostId()).getName();
+        title = comment.getSender().getBaseUser().getName();
+        subtitle = "in " + comment.getPost().getOwner().getName();
         content = comment.getMessage();
         extra = comment.getDateSent();
         this.comment = comment;

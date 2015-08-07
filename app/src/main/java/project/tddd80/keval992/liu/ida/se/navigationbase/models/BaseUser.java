@@ -7,8 +7,6 @@ import java.io.Serializable;
  */
 public class BaseUser implements Serializable {
 
-    private final static ModelCache<BaseUser> baseUsers = new ModelCache<>(ModelCache.CACHE_SIZE);
-
     private final int id;
     private String username;
     private String name;
@@ -17,11 +15,6 @@ public class BaseUser implements Serializable {
         this.id = id;
         this.username = username;
         this.name = name;
-        baseUsers.put(id, this);
-    }
-
-    public static BaseUser getReferenceTo(int userId) {
-        return baseUsers.get(userId);
     }
 
     public int getId() {

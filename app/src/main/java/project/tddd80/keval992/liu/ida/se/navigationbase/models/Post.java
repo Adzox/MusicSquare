@@ -7,29 +7,20 @@ import java.io.Serializable;
  */
 public class Post implements Serializable {
 
-    private static final ModelCache<Post> posts = new ModelCache<>(ModelCache.CACHE_SIZE);
-
     private final int id;
     private final String dateSent;
-    private final int userId;  // SENDER ID
-    private final int ownerId; // PAGE ID
     private final String message;
-    private User sender;
-    private Page owner;
+    private final User sender;
+    private final Page owner;
     private boolean liked;
 
-    public Post(int id, String dateSent, int userId, int ownerId, String message, boolean liked) {
+    public Post(int id, String dateSent, User sender, Page owner, String message, boolean liked) {
         this.id = id;
         this.dateSent = dateSent;
-        this.userId = userId;
-        this.ownerId = ownerId;
+        this.sender = sender;
+        this.owner = owner;
         this.message = message;
         this.liked = liked;
-        posts.put(id, this);
-    }
-
-    public static Post getReferenceTo(int postId) {
-        return posts.get(postId);
     }
 
     public int getId() {
@@ -40,12 +31,12 @@ public class Post implements Serializable {
         return dateSent;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getSender() {
+        return sender;
     }
 
-    public int getOwnerId() {
-        return ownerId;
+    public Page getOwner() {
+        return owner;
     }
 
     public String getMessage() {

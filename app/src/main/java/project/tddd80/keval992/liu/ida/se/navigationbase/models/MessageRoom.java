@@ -10,8 +10,6 @@ import java.util.List;
  */
 public class MessageRoom implements Serializable {
 
-    private final static ModelCache<MessageRoom> messageRooms = new ModelCache<>(ModelCache.CACHE_SIZE);
-
     private final int id;
     private String title;
     private List<User> members;
@@ -20,10 +18,6 @@ public class MessageRoom implements Serializable {
         this.id = id;
         this.title = title;
         this.members = members;
-    }
-
-    public static MessageRoom getReferenceTo(int id) {
-        return messageRooms.get(id);
     }
 
     public int getId() {

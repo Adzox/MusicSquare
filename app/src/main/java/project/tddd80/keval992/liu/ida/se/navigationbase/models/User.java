@@ -13,9 +13,7 @@ import project.tddd80.keval992.liu.ida.se.navigationbase.utils.ImageLoader;
  */
 public class User implements Serializable {
 
-    private final static ModelCache<User> users = new ModelCache<>(ModelCache.CACHE_SIZE);
-
-    private final int userId;
+    private BaseUser baseUser;
     private String location;
     private String information;
     private String profilePath;
@@ -28,21 +26,16 @@ public class User implements Serializable {
         }
     };
 
-    public User(int userId, String location, String information, String profilePath, List<String> genres) {
-        this.userId = userId;
+    public User(BaseUser baseUser, String location, String information, String profilePath, List<String> genres) {
+        this.baseUser = baseUser;
         this.location = location;
         this.information = information;
         this.profilePath = profilePath;
         this.genres = genres;
-        users.put(userId, this);
     }
 
-    public static User getReferenceTo(int id) {
-        return users.get(id);
-    }
-
-    public int getUserId() {
-        return userId;
+    public BaseUser getBaseUser() {
+        return baseUser;
     }
 
     public String getLocation() {

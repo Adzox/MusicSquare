@@ -7,18 +7,15 @@ import java.io.Serializable;
  */
 public class Message implements Serializable {
 
-    private String senderName;
-    private int roomId;
     private MessageRoom messageRoom;
     private User sender;
     private String message;
     private String dateSent;
 
-    public Message(int userId, int roomId, String message, String dateSent) {
-        sender = User.getReferenceTo(userId);
-        senderName = BaseUser.getReferenceTo(userId).getName();
+    public Message(User user, MessageRoom messageRoom, String message, String dateSent) {
+        sender = user;
         this.message = message;
-        this.roomId = roomId;
+        this.messageRoom = messageRoom;
         this.dateSent = dateSent;
     }
 
@@ -30,12 +27,8 @@ public class Message implements Serializable {
         return message;
     }
 
-    public String getSenderName() {
-        return senderName;
-    }
-
-    public int getRoomId() {
-        return roomId;
+    public MessageRoom getMessageRoom() {
+        return messageRoom;
     }
 
     public String getDateSent() {
@@ -44,6 +37,6 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-        return senderName + ": " + message;
+        return "" + ": " + message;
     }
 }
