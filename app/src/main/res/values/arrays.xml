@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="types">
+        <item>Musician</item>
+        <item>Band</item>
+        <item>Artist</item>
+        <item>Shop</item>
+        <item>Arranger</item>
+    </string-array>
+</resources>
