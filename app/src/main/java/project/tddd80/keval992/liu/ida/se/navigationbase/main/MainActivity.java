@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                     menuFragment = MenuFragment.basicMode();
                 }
             } else {
-                menuFragment = MenuFragment.basicMode();
+                menuFragment = MenuFragment.normalMode();
             }
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, menuFragment)
