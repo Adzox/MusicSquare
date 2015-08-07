@@ -1,4 +1,4 @@
-package project.tddd80.keval992.liu.ida.se.navigationbase.utils;
+package project.tddd80.keval992.liu.ida.se.navigationbase.network;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
