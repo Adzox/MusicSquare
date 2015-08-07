@@ -32,4 +32,8 @@ public final class ResultsReceiver {
     public static final List<Serializable> getResults(Class clazz) {
         return results.get(clazz);
     }
+
+    public static final Serializable getFirstResult(Class clazz) {
+        return results.get(clazz).get(0);
+    }
 }
