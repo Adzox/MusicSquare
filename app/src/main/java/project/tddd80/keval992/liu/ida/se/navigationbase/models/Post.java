@@ -1,11 +1,15 @@
 package project.tddd80.keval992.liu.ida.se.navigationbase.models;
 
 import java.io.Serializable;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Model class representing a post in the application.
  */
 public class Post implements Serializable {
+
+    private static final Map<Integer, Post> posts = new LinkedHashMap<>();
 
     private final int id;
     private final String dateSent;
@@ -21,6 +25,11 @@ public class Post implements Serializable {
         this.owner = owner;
         this.message = message;
         this.liked = liked;
+        posts.put(id, this);
+    }
+
+    public static Post getPost(int id) {
+        return posts.get(id);
     }
 
     public int getId() {
