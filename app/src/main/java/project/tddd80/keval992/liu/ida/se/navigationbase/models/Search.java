@@ -5,7 +5,7 @@ import android.widget.ImageView;
 
 import java.io.Serializable;
 
-import project.tddd80.keval992.liu.ida.se.navigationbase.utils.ImageLoader;
+import project.tddd80.keval992.liu.ida.se.navigationbase.network.ImageLoader;
 
 /**
  * Model class for representing the data returned when searching.

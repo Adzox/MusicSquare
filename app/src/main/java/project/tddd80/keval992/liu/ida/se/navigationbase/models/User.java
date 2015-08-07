@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import java.io.Serializable;
 import java.util.List;
 
-import project.tddd80.keval992.liu.ida.se.navigationbase.utils.ImageLoader;
+import project.tddd80.keval992.liu.ida.se.navigationbase.network.ImageLoader;
 
 /**
  * Model class representing an advanced user in the application.
