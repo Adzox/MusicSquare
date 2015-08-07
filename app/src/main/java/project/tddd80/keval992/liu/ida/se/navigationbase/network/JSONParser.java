@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -83,6 +84,7 @@ public final class JSONParser {
 
     public static void parseJSONObject(JSONObject jsonObject) throws JSONException {
         for (int i = 0; i < jsonObject.names().length(); i++) {
+            Serializable ser = null;
             switch (jsonObject.names().getString(i)) {
                 case "result":
                     if (jsonObject.getJSONObject("result") != null) {
@@ -92,30 +94,31 @@ public final class JSONParser {
                     }
                     break;
                 case "base_user":
-                    parseBaseUser(jsonObject.getJSONObject("base_user"));
+                    ser = (Serializable) parseBaseUser(jsonObject.getJSONObject("base_user"));
                     break;
                 case "user":
-                    parseUser(jsonObject.getJSONArray("user"));
+                    ser = (Serializable) parseUser(jsonObject.getJSONArray("user"));
                     break;
                 case "page":
-                    parsePage(jsonObject.getJSONArray("page"));
+                    ser = (Serializable) parsePage(jsonObject.getJSONArray("page"));
                     break;
                 case "post":
-                    parsePost(jsonObject.getJSONArray("post"));
+                    ser = (Serializable) parsePost(jsonObject.getJSONArray("post"));
                     break;
                 case "comment":
-                    parseComment(jsonObject.getJSONArray("comment"));
+                    ser = (Serializable) parseComment(jsonObject.getJSONArray("comment"));
                     break;
                 case "message":
-                    parseMessage(jsonObject.getJSONObject("message"));
+                    ser = (Serializable) parseMessage(jsonObject.getJSONArray("message"));
                     break;
                 case "search":
-                    parseSearch(jsonObject.getJSONObject("search"));
+                    ser = (Serializable) parseSearch(jsonObject.getJSONObject("search"));
                     break;
                 case "messageRoom":
-                    parseMessageRoom(jsonObject.getJSONArray("messageRoom"));
+                    ser = (Serializable) parseMessageRoom(jsonObject.getJSONArray("messageRoom"));
                     break;
             }
+            ResultsReceiver.addResults(ser.getClass(), ser);
         }
     }
 
@@ -128,81 +131,71 @@ public final class JSONParser {
         return strings;
     }
 
-    private static void parseBaseUser(JSONObject baseUser) throws JSONException {
-        new BaseUser(baseUser.getInt("id"), baseUser.getString("username"), baseUser.getString("name"));
+    private static BaseUser parseBaseUser(JSONObject baseUser) throws JSONException {
+        return new BaseUser(baseUser.getInt("id"), baseUser.getString("username"), baseUser.getString("name"));
     }
 
-    private static void parseUser(JSONArray user) throws JSONException {
+    private static User parseUser(JSONArray user) throws JSONException {
         JSONObject u = user.getJSONObject(0);
-        parseBaseUser(user.getJSONObject(2));
-        new User(u.getInt("user_id"), u.getString("location"), u.getString("information"), u.getString("profile_path"),
+        return new User(parseBaseUser(user.getJSONObject(2)), u.getString("location"), u.getString("information"), u.getString("profile_path"),
                 parseGenre(user.getJSONObject(1)));
     }
 
-    private static User getParseUser(JSONArray user) throws JSONException {
-        JSONObject u = user.getJSONObject(0);
-        parseBaseUser(user.getJSONObject(2));
-        return new User(u.getInt("user_id"), u.getString("location"), u.getString("information"), u.getString("profile_path"),
-                parseGenre(user.getJSONObject(1)));
-    }
-
-    private static void parsePage(JSONArray page) throws JSONException {
+    private static Page parsePage(JSONArray page) throws JSONException {
         JSONObject p = page.getJSONObject(0);
         List<User> users = parseMembers(page.getJSONArray(2));
         if (page.length() < 4) {
-            new Page(p.getInt("id"), p.getString("type"), p.getString("name"), p.getString("location"),
+            return new Page(p.getInt("id"), p.getString("type"), p.getString("name"), p.getString("location"),
                     p.getString("information"), p.getString("profilePath"), false, false,
                     parseGenre(page.getJSONObject(1)), users);
         } else {
             JSONObject pi = page.getJSONObject(3);
-            new Page(p.getInt("id"), p.getString("type"), p.getString("name"), p.getString("location"),
+            return new Page(p.getInt("id"), p.getString("type"), p.getString("name"), p.getString("location"),
                     p.getString("information"), p.getString("profilePath"), pi.getBoolean("member"),
                     pi.getBoolean("favorite"), parseGenre(page.getJSONObject(1)), users);
         }
     }
 
-    private static void parsePost(JSONArray post) throws JSONException {
+    // IF PAGE IN MEMORY WHILE LOOKING AT POSTS, DON'T SEND IT! SAVE IT AND ACCESS WITH ID!
+    private static Post parsePost(JSONArray post) throws JSONException {
         JSONObject p = post.getJSONObject(0);
-        parseUser(post.getJSONArray(1));
-        parsePage(post.getJSONArray(2));
         if (post.length() < 4) {
-            new Post(p.getInt("id"), p.getString("dateSent"), p.getInt("userId"), p.getInt("ownerId"),
-                    p.getString("message"), false);
+            return new Post(p.getInt("id"), p.getString("dateSent"), parseUser(post.getJSONArray(1)),
+                    parsePage(post.getJSONArray(2)), p.getString("message"), false);
         } else {
             JSONObject l = post.getJSONObject(3);
-            new Post(p.getInt("id"), p.getString("dateSent"), p.getInt("userId"), p.getInt("ownerId"),
-                    p.getString("message"), l.getBoolean("like"));
+            return new Post(p.getInt("id"), p.getString("dateSent"), parseUser(post.getJSONArray(1)),
+                    parsePage(post.getJSONArray(2)), p.getString("message"), l.getBoolean("like"));
         }
     }
 
-    private static void parseComment(JSONArray comment) throws JSONException {
+    private static Comment parseComment(JSONArray comment) throws JSONException {
         JSONObject c = comment.getJSONObject(0);
-        parseUser(comment.getJSONArray(1));
-        new Comment(c.getInt("id"), c.getInt("postId"), c.getString("dateSent"), c.getInt("senderId"),
-                c.getString("message"));
+        return new Comment(c.getInt("id"), Post.getPost(c.getInt("postId")), c.getString("dateSent"),
+                parseUser(comment.getJSONArray(1)), c.getString("message"));
     }
 
-    private static void parseMessage(JSONObject message) throws JSONException {
-        new Message(message.getInt("userId"), message.getInt("roomId"), message.getString("message"),
-                message.getString("dateSent"));
+    private static Message parseMessage(JSONArray message) throws JSONException {
+        JSONObject m = message.getJSONObject(0);
+        MessageRoom mr = MessageRoom.getMessageRoom(m.getInt("roomId"));
+        return new Message(parseUser(message.getJSONArray(1)), mr, m.getString("message"), m.getString("dateSent"));
     }
 
-    private static void parseSearch(JSONObject search) throws JSONException {
-        Search searchObject = new Search(search.getInt("id"), search.getString("kind"), search.getString("name"),
+    private static Search parseSearch(JSONObject search) throws JSONException {
+        return new Search(search.getInt("id"), search.getString("kind"), search.getString("name"),
                 search.getString("type"), search.getString("location"), search.getString("profilePath"));
-        ResultsReceiver.addResults(Search.class, searchObject);
     }
 
-    private static void parseMessageRoom(JSONArray messageRoom) throws JSONException {
+    private static MessageRoom parseMessageRoom(JSONArray messageRoom) throws JSONException {
         JSONObject m = messageRoom.getJSONObject(0);
         List<User> users = parseMembers(messageRoom.getJSONArray(1));
-        new MessageRoom(m.getInt("id"), m.getString("title"), users);
+        return new MessageRoom(m.getInt("id"), m.getString("title"), users);
     }
 
     private static List<User> parseMembers(JSONArray users) throws JSONException {
         List<User> members = new LinkedList<>();
         for (int n = 0; n < users.length(); n++) {
-            members.add(getParseUser(users.getJSONArray(n)));
+            members.add(parseUser(users.getJSONArray(n)));
         }
         return members;
     }
