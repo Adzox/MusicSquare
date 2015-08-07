@@ -17,7 +17,7 @@ public class UserRecyclerViewAdapter extends ModelRecyclerViewAdapter<User> {
     @Override
     public void onBindViewHolder(ModelCardViewHolder holder, int position) {
         User user = getModels().get(position);
-        BaseUser baseUser = BaseUser.getReferenceTo(user.getUserId());
+        BaseUser baseUser = user.getBaseUser();
         user.setProfileImage(holder.image);
         holder.title.setText(baseUser.getName());
         holder.subtitle.setText("");

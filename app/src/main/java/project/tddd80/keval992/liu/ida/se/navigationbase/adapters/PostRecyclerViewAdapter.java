@@ -5,10 +5,7 @@ import android.view.View;
 
 import java.util.List;
 
-import project.tddd80.keval992.liu.ida.se.navigationbase.models.BaseUser;
-import project.tddd80.keval992.liu.ida.se.navigationbase.models.Page;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Post;
-import project.tddd80.keval992.liu.ida.se.navigationbase.models.User;
 
 /**
  * Adapter for displaying posts in a card-layout.
@@ -22,12 +19,9 @@ public class PostRecyclerViewAdapter extends ModelRecyclerViewAdapter<Post> impl
     @Override
     public void onBindViewHolder(ModelCardViewHolder holder, int position) {
         Post post = getModels().get(position);
-        BaseUser baseUser = BaseUser.getReferenceTo(post.getUserId());
-        User user = User.getReferenceTo(post.getUserId());
-        Page page = Page.getReferenceTo(post.getOwnerId());
-        user.setProfileImage(holder.image);
-        holder.title.setText(baseUser.getName());
-        holder.subtitle.setText("in " + page.getName());
+        post.getSender().setProfileImage(holder.image);
+        holder.title.setText(post.getSender().getBaseUser().getName());
+        holder.subtitle.setText("in " + post.getOwner().getName());
         holder.content.setText(post.getMessage());
         holder.extra.setText(post.getDateSent());
         holder.setOnItemClickListener(this);

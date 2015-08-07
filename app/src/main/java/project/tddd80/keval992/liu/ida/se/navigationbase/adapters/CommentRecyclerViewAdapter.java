@@ -19,9 +19,9 @@ public class CommentRecyclerViewAdapter extends ModelRecyclerViewAdapter<Comment
     @Override
     public void onBindViewHolder(ModelCardViewHolder holder, int position) {
         Comment comment = getModels().get(position);
-        BaseUser baseUser = BaseUser.getReferenceTo(comment.getSenderId());
-        Post post = Post.getReferenceTo(comment.getPostId());
-        Page page = Page.getReferenceTo(post.getOwnerId());
+        BaseUser baseUser = comment.getSender().getBaseUser();
+        Post post = comment.getPost();
+        Page page = comment.getPost().getOwner();
         holder.title.setText(baseUser.getName());
         holder.subtitle.setText("in " + page.getName());
         holder.content.setText(comment.getMessage());
