@@ -11,6 +11,8 @@ import project.tddd80.keval992.liu.ida.se.navigationbase.network.PreferencesMana
  */
 public class LoginInfo implements Serializable {
 
+    public static final LoginInfo LOGIN_INFO = new LoginInfo(-1, false);
+
     private static final String USER_ID = "User ID";
     private static final String LOGGED_IN = "Logged in";
     private static final String ADVANCED_USER = "Advanced user";
@@ -23,10 +25,6 @@ public class LoginInfo implements Serializable {
     private LoginInfo(int userId, boolean isAdvancedUser) {
         this.userId = userId;
         this.isAdvancedUser = isAdvancedUser;
-    }
-
-    private static LoginInfo getInstance() {
-        return loginInfo;
     }
 
     public static void saveLogin(int userId, boolean isAdvancedUser) {
@@ -47,11 +45,11 @@ public class LoginInfo implements Serializable {
     }
 
     public static int getUserId() {
-        return getInstance().userId;
+        return LOGIN_INFO.userId;
     }
 
     public static boolean isAdvancedUser() {
-        return getInstance().isAdvancedUser;
+        return LOGIN_INFO.isAdvancedUser;
     }
 
     public static String getRegistrationId() {
@@ -65,8 +63,8 @@ public class LoginInfo implements Serializable {
     }
 
     public static void loadFromPreferences(Activity activity) {
-        LoginInfo.getInstance().userId = Integer.parseInt(PreferencesManager.readFromPreferences(activity, USER_ID, "-1"));
-        LoginInfo.hasLoggedIn = Boolean.parseBoolean(PreferencesManager.readFromPreferences(activity, LOGGED_IN, "false"));
-        LoginInfo.getInstance().isAdvancedUser = Boolean.parseBoolean(PreferencesManager.readFromPreferences(activity, ADVANCED_USER, "false"));
+        LOGIN_INFO.userId = Integer.parseInt(PreferencesManager.readFromPreferences(activity, USER_ID, "-1"));
+        hasLoggedIn = Boolean.parseBoolean(PreferencesManager.readFromPreferences(activity, LOGGED_IN, "false"));
+        LOGIN_INFO.isAdvancedUser = Boolean.parseBoolean(PreferencesManager.readFromPreferences(activity, ADVANCED_USER, "false"));
     }
 }
