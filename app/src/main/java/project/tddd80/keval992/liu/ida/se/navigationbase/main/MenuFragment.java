@@ -47,7 +47,7 @@ public class MenuFragment extends Fragment implements NavigationView.OnNavigatio
 
     public static final MenuFragment advancedMode() {
         MenuFragment menuFragment = new MenuFragment();
-        menuFragment.mode = 1;
+        menuFragment.mode = 2;
         return menuFragment;
     }
 
