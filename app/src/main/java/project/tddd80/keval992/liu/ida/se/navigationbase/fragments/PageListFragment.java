@@ -9,11 +9,14 @@ import android.view.MenuItem;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import project.tddd80.keval992.liu.ida.se.navigationbase.R;
 import project.tddd80.keval992.liu.ida.se.navigationbase.adapters.PageRecyclerViewAdapter;
+import project.tddd80.keval992.liu.ida.se.navigationbase.main.ResultsReceiver;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Page;
 import project.tddd80.keval992.liu.ida.se.navigationbase.network.HttpRequestTask;
 import project.tddd80.keval992.liu.ida.se.navigationbase.network.JSONFactory;
@@ -46,24 +49,32 @@ public class PageListFragment extends ModelListFragment<Page> {
     @Override
     protected List<Page> getModels() {
         List<Page> pages = new LinkedList<>();
+        ResultsReceiver.newSearch();
         switch (mode) {
             case MODE_FAVORITES:
-                // FILL WITH FAVORITED PAGES
-                break;
+                return fetchPages("favorites");
             case MODE_MEMBERSHIPED:
-                new HttpRequestTask("", getActivity()) {
+                return fetchPages("memberships");
+            default:
+                return pages;
+        }
+    }
 
-                    @Override
-                    protected void atPostExecute(JSONObject jsonObject) {
-                        try {
-                            JSONParser.parseJSONObject(jsonObject);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }.execute(JSONFactory.createIdData());
-                // FILL WITH MEMBERSHIPED PAGES
-                break;
+    private List<Page> fetchPages(String type) {
+        List<Page> pages = new ArrayList<>();
+        new HttpRequestTask(type, getActivity()) {
+
+            @Override
+            protected void atPostExecute(JSONObject jsonObject) {
+                try {
+                    JSONParser.parseJSONObject(jsonObject);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.execute(JSONFactory.createIdData());
+        for (Serializable serializable : ResultsReceiver.getResults(Page.class)) {
+            pages.add((Page) serializable);
         }
         return pages;
     }
