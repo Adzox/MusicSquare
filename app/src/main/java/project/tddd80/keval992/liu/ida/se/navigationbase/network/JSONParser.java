@@ -1,6 +1,7 @@
 package project.tddd80.keval992.liu.ida.se.navigationbase.network;
 
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -28,6 +29,8 @@ import project.tddd80.keval992.liu.ida.se.navigationbase.models.User;
  * Created by kevin on 2015-05-08.
  */
 public final class JSONParser {
+
+    private static final String LOG_TAG = JSONParser.class.getSimpleName();
 
     private JSONParser() {
     }
@@ -87,6 +90,7 @@ public final class JSONParser {
             Serializable ser = null;
             switch (jsonObject.names().getString(i)) {
                 case "result":
+                    Log.i(LOG_TAG, "Parsing results");
                     if (jsonObject.getJSONObject("result") != null) {
                         parseJSONObject(jsonObject.getJSONObject("result"));
                     } else if (jsonObject.getJSONArray("result") != null) {
@@ -94,27 +98,35 @@ public final class JSONParser {
                     }
                     break;
                 case "base_user":
+                    Log.i(LOG_TAG, "Parsing base_user");
                     ser = (Serializable) parseBaseUser(jsonObject.getJSONObject("base_user"));
                     break;
                 case "user":
+                    Log.i(LOG_TAG, "Parsing user");
                     ser = (Serializable) parseUser(jsonObject.getJSONArray("user"));
                     break;
                 case "page":
+                    Log.i(LOG_TAG, "Parsing page");
                     ser = (Serializable) parsePage(jsonObject.getJSONArray("page"));
                     break;
                 case "post":
+                    Log.i(LOG_TAG, "Parsing post");
                     ser = (Serializable) parsePost(jsonObject.getJSONArray("post"));
                     break;
                 case "comment":
+                    Log.i(LOG_TAG, "Parsing comment");
                     ser = (Serializable) parseComment(jsonObject.getJSONArray("comment"));
                     break;
                 case "message":
+                    Log.i(LOG_TAG, "Parsing message");
                     ser = (Serializable) parseMessage(jsonObject.getJSONArray("message"));
                     break;
                 case "search":
+                    Log.i(LOG_TAG, "Parsing search");
                     ser = (Serializable) parseSearch(jsonObject.getJSONObject("search"));
                     break;
                 case "messageRoom":
+                    Log.i(LOG_TAG, "Parsing messageRoom");
                     ser = (Serializable) parseMessageRoom(jsonObject.getJSONArray("messageRoom"));
                     break;
             }
