@@ -91,9 +91,9 @@ public final class JSONParser {
             switch (jsonObject.names().getString(i)) {
                 case "result":
                     Log.i(LOG_TAG, "Parsing results");
-                    if (jsonObject.getJSONObject("result") != null) {
+                    if (jsonObject.optJSONObject("result") != null) {
                         parseJSONObject(jsonObject.getJSONObject("result"));
-                    } else if (jsonObject.getJSONArray("result") != null) {
+                    } else if (jsonObject.optJSONArray("result") != null) {
                         parseJSONArray(jsonObject.getJSONArray("result"));
                     }
                     break;
