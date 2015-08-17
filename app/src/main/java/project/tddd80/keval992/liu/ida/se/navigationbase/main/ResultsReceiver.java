@@ -23,7 +23,7 @@ public final class ResultsReceiver {
     }
 
     public static final void addResults(Class clazz, Serializable result) {
-        if (results.containsKey(clazz)) {
+        if (!results.containsKey(clazz)) {
             results.put(clazz, new LinkedList<Serializable>());
         }
         results.get(clazz).add(result);
