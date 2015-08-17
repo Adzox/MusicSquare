@@ -136,10 +136,10 @@ public abstract class HttpRequestTask extends AsyncTask<JSONObject, Void, JSONOb
      * Method to avoid calling onPostExecute when running threaded.
      */
     private void postExecute(JSONObject jsonObject) {
+        if (jsonObject != null) atPostExecute(jsonObject);
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
-        if (jsonObject != null) atPostExecute(jsonObject);
     }
 
     /**
