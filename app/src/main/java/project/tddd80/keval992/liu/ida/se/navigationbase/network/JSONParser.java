@@ -130,7 +130,9 @@ public final class JSONParser {
                     ser = (Serializable) parseMessageRoom(jsonObject.getJSONArray("messageRoom"));
                     break;
             }
-            ResultsReceiver.addResults(ser.getClass(), ser);
+            if (ser != null) {
+                ResultsReceiver.addResults(ser.getClass(), ser);
+            }
         }
     }
 
@@ -144,24 +146,25 @@ public final class JSONParser {
     }
 
     private static BaseUser parseBaseUser(JSONObject baseUser) throws JSONException {
+        baseUser = baseUser.getJSONObject("base_user");
         return new BaseUser(baseUser.getInt("id"), baseUser.getString("username"), baseUser.getString("name"));
     }
 
     private static User parseUser(JSONArray user) throws JSONException {
-        JSONObject u = user.getJSONObject(0);
+        JSONObject u = user.getJSONObject(0).getJSONObject("user");
         return new User(parseBaseUser(user.getJSONObject(2)), u.getString("location"), u.getString("information"), u.getString("profile_path"),
                 parseGenre(user.getJSONObject(1)));
     }
 
     private static Page parsePage(JSONArray page) throws JSONException {
-        JSONObject p = page.getJSONObject(0);
-        List<User> users = parseMembers(page.getJSONArray(2));
+        JSONObject p = page.getJSONObject(0).getJSONObject("page");
+        List<User> users = parseMembers(page.getJSONObject(2).getJSONArray("members"));
         if (page.length() < 4) {
             return new Page(p.getInt("id"), p.getString("type"), p.getString("name"), p.getString("location"),
                     p.getString("information"), p.getString("profilePath"), false, false,
                     parseGenre(page.getJSONObject(1)), users);
         } else {
-            JSONObject pi = page.getJSONObject(3);
+            JSONObject pi = page.getJSONObject(3).getJSONObject("page info");
             return new Page(p.getInt("id"), p.getString("type"), p.getString("name"), p.getString("location"),
                     p.getString("information"), p.getString("profilePath"), pi.getBoolean("member"),
                     pi.getBoolean("favorite"), parseGenre(page.getJSONObject(1)), users);
@@ -207,7 +210,7 @@ public final class JSONParser {
     private static List<User> parseMembers(JSONArray users) throws JSONException {
         List<User> members = new LinkedList<>();
         for (int n = 0; n < users.length(); n++) {
-            members.add(parseUser(users.getJSONArray(n)));
+            members.add(parseUser(users.getJSONObject(n).getJSONArray("user")));
         }
         return members;
     }
