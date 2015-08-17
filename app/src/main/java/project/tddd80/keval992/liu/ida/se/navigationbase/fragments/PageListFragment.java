@@ -11,7 +11,6 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import project.tddd80.keval992.liu.ida.se.navigationbase.R;
@@ -44,39 +43,38 @@ public class PageListFragment extends ModelListFragment<Page> {
         if (mode == MODE_MEMBERSHIPED) {
             setHasOptionsMenu(true);
         }
+        loadModels();
     }
 
-    @Override
-    protected List<Page> getModels() {
-        List<Page> pages = new LinkedList<>();
+    public final void loadModels() {
         ResultsReceiver.newSearch();
         switch (mode) {
             case MODE_FAVORITES:
-                return fetchPages("favorites");
+                fetchPages("favorites");
+                break;
             case MODE_MEMBERSHIPED:
-                return fetchPages("memberships");
-            default:
-                return pages;
+                fetchPages("memberships");
+                break;
         }
     }
 
-    private List<Page> fetchPages(String type) {
-        List<Page> pages = new ArrayList<>();
+    private void fetchPages(String type) {
+        final List<Page> pages = new ArrayList<>();
         new HttpRequestTask(type, getActivity()) {
 
             @Override
             protected void atPostExecute(JSONObject jsonObject) {
                 try {
                     JSONParser.parseJSONObject(jsonObject);
+                    for (Serializable serializable : ResultsReceiver.getResults(Page.class)) {
+                        pages.add((Page) serializable);
+                    }
+                    setItems(pages);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         }.execute(JSONFactory.createIdData());
-        for (Serializable serializable : ResultsReceiver.getResults(Page.class)) {
-            pages.add((Page) serializable);
-        }
-        return pages;
     }
 
     @Override
