@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 import project.tddd80.keval992.liu.ida.se.navigationbase.R;
@@ -40,17 +41,23 @@ public abstract class ModelListFragment<Model extends Serializable> extends Frag
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_model_list, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.model_list_list);
-        setUpRecyclerView(getModels());
+        setUpRecyclerView();
         return view;
     }
 
-    private void setUpRecyclerView(List<Model> models) {
-        modelRecyclerViewAdapter = getModelRecyclerViewAdapter(models);
+    private void setUpRecyclerView() {
+        modelRecyclerViewAdapter = getModelRecyclerViewAdapter(new ArrayList<Model>());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         layoutManager.scrollToPosition(0);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(modelRecyclerViewAdapter);
+    }
+
+    public final void setItems(List<Model> models) {
+        modelRecyclerViewAdapter.getModels().clear();
+        modelRecyclerViewAdapter.getModels().addAll(models);
+        modelRecyclerViewAdapter.notifyDataSetChanged();
     }
 
     // For the application to work, this Reflection method must always work!
@@ -70,6 +77,4 @@ public abstract class ModelListFragment<Model extends Serializable> extends Frag
         }
         return null;
     }
-
-    protected abstract List<Model> getModels();
 }
