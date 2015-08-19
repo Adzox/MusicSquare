@@ -47,10 +47,9 @@ public class CreatePageFragment extends Fragment implements View.OnClickListener
                 @Override
                 protected void atPostExecute(JSONObject jsonObject) {
                     if (JSONParser.wasSuccessful(jsonObject)) {
-                        // TO PAGELISTFRAGMENT AGAIN!
                         Fragment fragment = PageListFragment.newInstance(PageListFragment.MODE_MEMBERSHIPED);
                         getFragmentManager().beginTransaction()
-                                .add(R.id.menu_content, fragment)
+                                .replace(R.id.menu_content, fragment)
                                 .commit();
                     } else {
                         Toast.makeText(getActivity(), JSONParser.extractError(jsonObject), Toast.LENGTH_SHORT);
