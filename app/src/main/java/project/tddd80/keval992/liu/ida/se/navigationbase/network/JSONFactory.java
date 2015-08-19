@@ -87,10 +87,15 @@ public final class JSONFactory {
             object.put("type", type);
             object.put("information", information);
             object.put("location", location);
+            addRequesterData(object);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return createSendFormat("pages", object);
+    }
+
+    private static void addRequesterData(JSONObject jsonObject) throws JSONException {
+        jsonObject.put("requesterId", LoginInfo.getUserId());
     }
 
     public static JSONObject createIdData() {
