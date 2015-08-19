@@ -1,8 +1,7 @@
 package project.tddd80.keval992.liu.ida.se.navigationbase.fragments;
 
 
-import java.util.LinkedList;
-import java.util.List;
+import android.os.Bundle;
 
 import project.tddd80.keval992.liu.ida.se.navigationbase.adapters.PostRecyclerViewAdapter;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Post;
@@ -31,16 +30,17 @@ public class PostListFragment2 extends ModelListFragment<Post> {
     }
 
     @Override
-    protected List<Post> getModels() {
-        List<Post> posts = new LinkedList<>();
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getModels();
+    }
+
+    protected void getModels() {
         switch (mode) {
             default:
             case MODE_GLOBAL_NEWS:
-                return posts;
             case MODE_FAVORITED_NEWS:
-                return posts;
             case MODE_PAGE_POSTS:
-                return posts;
         }
     }
 }

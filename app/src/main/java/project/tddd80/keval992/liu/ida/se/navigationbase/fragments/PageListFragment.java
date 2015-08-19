@@ -66,8 +66,11 @@ public class PageListFragment extends ModelListFragment<Page> {
             protected void atPostExecute(JSONObject jsonObject) {
                 try {
                     JSONParser.parseJSONObject(jsonObject);
-                    for (Serializable serializable : ResultsReceiver.getResults(Page.class)) {
-                        pages.add((Page) serializable);
+                    List<Serializable> serializables = ResultsReceiver.getResults(Page.class);
+                    if (!pages.isEmpty()) {
+                        for (Serializable serializable : serializables) {
+                            pages.add((Page) serializable);
+                        }
                     }
                     setItems(pages);
                 } catch (JSONException e) {
@@ -88,7 +91,7 @@ public class PageListFragment extends ModelListFragment<Page> {
         switch (item.getItemId()) {
             case R.id.add_button:
                 getFragmentManager().beginTransaction()
-                        .add(R.id.menu_content, new CreatePageFragment())
+                        .replace(R.id.menu_content, new CreatePageFragment())
                         .commit();
                 return true;
             default:
