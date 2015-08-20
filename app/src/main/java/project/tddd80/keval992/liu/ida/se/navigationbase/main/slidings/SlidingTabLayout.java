@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package project.tddd80.keval992.liu.ida.se.navigationbase.main;
+package project.tddd80.keval992.liu.ida.se.navigationbase.main.sliders;
 
 import android.content.Context;
 import android.graphics.Typeface;

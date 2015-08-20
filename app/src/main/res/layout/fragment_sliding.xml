@@ -2,9 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="project.tddd80.keval992.liu.ida.se.navigationbase.main.SlidingFragment">
+    tools:context="project.tddd80.keval992.liu.ida.se.navigationbase.main.sliders.SlidingFragment">
 
-    <project.tddd80.keval992.liu.ida.se.navigationbase.main.SlidingTabLayout
+    <project.tddd80.keval992.liu.ida.se.navigationbase.main.sliders.SlidingTabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
