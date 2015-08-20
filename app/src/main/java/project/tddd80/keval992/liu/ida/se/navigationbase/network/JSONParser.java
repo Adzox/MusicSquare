@@ -77,7 +77,9 @@ public final class JSONParser {
 
     public static void parseJSONArray(JSONArray jsonObject) {
         try {
+
             for (int n = 0; n < jsonObject.length(); n++) {
+                Log.i(LOG_TAG, "PARSING JSON ARRAY no. " + n);
                 parseJSONObject(jsonObject.getJSONObject(n));
             }
         } catch (JSONException e) {
@@ -90,10 +92,11 @@ public final class JSONParser {
             Serializable ser = null;
             switch (jsonObject.names().getString(i)) {
                 case "result":
-                    Log.i(LOG_TAG, "Parsing results");
                     if (jsonObject.optJSONObject("result") != null) {
+                        Log.i(LOG_TAG, "Parsing results as JSONObject");
                         parseJSONObject(jsonObject.getJSONObject("result"));
                     } else if (jsonObject.optJSONArray("result") != null) {
+                        Log.i(LOG_TAG, "Parsing results as JSONArray");
                         parseJSONArray(jsonObject.getJSONArray("result"));
                     }
                     break;
