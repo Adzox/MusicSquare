@@ -107,4 +107,15 @@ public final class JSONFactory {
         }
         return createSendFormat("", object);
     }
+
+    public static JSONObject createFavoriteData(int pageId) {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("userId", LoginInfo.getUserId());
+            object.put("pageId", pageId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return createSendFormat("pageFavorited", object);
+    }
 }
