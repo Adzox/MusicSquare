@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.List;
 
@@ -84,4 +85,8 @@ public class UserListFragment extends ModelListFragment {
         }
     }
 
+    @Override
+    protected void itemClicked(View view, int position) {
+        // GO TO USERS PAGE ON CLICK.
+    }
 }
