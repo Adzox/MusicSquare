@@ -2,7 +2,14 @@ package project.tddd80.keval992.liu.ida.se.navigationbase.fragments;
 
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,6 +18,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import project.tddd80.keval992.liu.ida.se.navigationbase.R;
 import project.tddd80.keval992.liu.ida.se.navigationbase.adapters.PostRecyclerViewAdapter;
 import project.tddd80.keval992.liu.ida.se.navigationbase.main.ResultsReceiver;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Page;
@@ -59,6 +67,42 @@ public class PostListFragment extends ModelListFragment<Post> {
         getModels();
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        if (mode == MODE_PAGE_POSTS && page != null && page.isUserMember()) {
+            FrameLayout topContainer = (FrameLayout) view.findViewById(R.id.topContainer);
+            initTopContainer(topContainer, inflater, container);
+        }
+        return view;
+    }
+
+    private void initTopContainer(FrameLayout frameLayout, LayoutInflater inflater, ViewGroup viewGroup) {
+        View v = inflater.inflate(R.layout.layout_text_button, viewGroup);
+        final EditText editText = (EditText) v.findViewById(R.id.text_field);
+        editText.setHint("Write a new post...");
+        Button button = (Button) v.findViewById(R.id.send_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createPost(editText.getText().toString());
+            }
+        });
+    }
+
+    private void createPost(String message) {
+        new HttpRequestTask("new") {
+            @Override
+            protected void atPostExecute(JSONObject jsonObject) {
+                if (JSONParser.wasSuccessful(jsonObject)) {
+                    getModels();
+                } else {
+                    Toast.makeText(getActivity(), JSONParser.extractError(jsonObject), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }.execute(JSONFactory.createNewPost(message, page.getId()));
+    }
+
     protected void getModels() {
         switch (mode) {
             default:
@@ -104,6 +148,9 @@ public class PostListFragment extends ModelListFragment<Post> {
 
     @Override
     protected void itemClicked(View view, int position) {
-        // Go to post-comment fragment on click.
+        Fragment fragment = CommentListFragment.newInstance(getItem(position));
+        getFragmentManager().beginTransaction()
+                .replace(R.id.menu_content, fragment)
+                .commit();
     }
 }
