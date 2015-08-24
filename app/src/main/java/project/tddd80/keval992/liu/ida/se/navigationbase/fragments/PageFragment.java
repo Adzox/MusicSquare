@@ -44,7 +44,6 @@ public class PageFragment extends Fragment implements View.OnClickListener {
         page.setProfileImage(profileImage);
         setPageCard(view.findViewById(R.id.page_card), page);
         setInfoCard(view.findViewById(R.id.info_card), page);
-        toogleFavoriteButton();
         return view;
     }
 
@@ -66,6 +65,7 @@ public class PageFragment extends Fragment implements View.OnClickListener {
                 sendFavoriteRequest();
             }
         });
+        initFavoriteButton();
     }
 
     private void setInfoCard(View infoView, Page page) {
@@ -92,22 +92,42 @@ public class PageFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    private void toogleFavoriteButton() {
+    private void initFavoriteButton() {
         if (!page.isUserMember()) {
             if (page.isHasUserFavorited()) {
-                favorite.setText("Add page to favorites");
-                favorite.setTextColor(getResources().getColor(R.color.normalColor));
-                page.setHasUserFavorited(false);
+                setFavoritedOn();
             } else {
-                favorite.setText("Remove page from favorites");
-                favorite.setTextColor(getResources().getColor(R.color.toogleColor));
-                page.setHasUserFavorited(true);
+                setFavoritedOff();
             }
         } else {
-            favorite.setVisibility(View.GONE);
-            favorite.setEnabled(false);
-            favorite.setOnClickListener(null);
+            disableFavoriteButton();
         }
+    }
+
+    private void toogleFavoriteButton() {
+        if (page.isHasUserFavorited()) {
+            setFavoritedOff();
+        } else {
+            setFavoritedOn();
+        }
+    }
+
+    private void setFavoritedOff() {
+        favorite.setText("Add page to favorites");
+        favorite.setTextColor(getResources().getColor(R.color.normalColor));
+        page.setHasUserFavorited(false);
+    }
+
+    private void setFavoritedOn() {
+        favorite.setText("Remove page from favorites");
+        favorite.setTextColor(getResources().getColor(R.color.toogleColor));
+        page.setHasUserFavorited(true);
+    }
+
+    private void disableFavoriteButton() {
+        favorite.setVisibility(View.GONE);
+        favorite.setEnabled(false);
+        favorite.setOnClickListener(null);
     }
 
     @Override
