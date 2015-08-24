@@ -1,12 +1,15 @@
 package project.tddd80.keval992.liu.ida.se.navigationbase.fragments;
 
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -63,10 +66,78 @@ public class CommentListFragment extends ModelListFragment<Comment> {
     }
 
     private void initTopContainer(FrameLayout frameLayout, LayoutInflater layoutInflater, ViewGroup viewGroup) {
+        LinearLayout linearLayout = new LinearLayout(getActivity());
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
         View v = layoutInflater.inflate(R.layout.layout_card, viewGroup);
         CardViewHolder cardViewHolder = new CardViewHolder(v);
         cardViewHolder.setCardViewModel(new CardViewModel(post));
-        frameLayout.addView(v);
+        linearLayout.addView(v);
+        CardView cv = (CardView) layoutInflater.inflate(R.layout.empty_card, viewGroup);
+        initCardView(cv);
+        linearLayout.addView(cv);
+        frameLayout.addView(linearLayout);
+    }
+
+    private void initCardView(CardView view) {
+        LinearLayout linearLayout = new LinearLayout(getActivity());
+        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+        final TextView textView = new TextView(getActivity());
+        textView.setText("Likes: ?");
+        final Button button = new Button(getActivity());
+        initLikeButton(button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeLike(button, textView);
+            }
+        });
+    }
+
+    private void initLikeButton(Button button) {
+        if (post.isLiked()) {
+            button.setText("Liked!");
+            button.setTextColor(getResources().getColor(R.color.toogleColor));
+        } else {
+            button.setText("Like");
+            button.setTextColor(getResources().getColor(R.color.normalColor));
+        }
+    }
+
+    private void changeLike(final Button button, final TextView textView) {
+        String routing = "";
+        if (post.isLiked()) {
+            routing = "delete";
+        } else {
+            routing = "new";
+        }
+        new HttpRequestTask(routing) {
+            @Override
+            protected void atPostExecute(JSONObject jsonObject) {
+                toggleLike(button);
+                fetchLikeCount(textView);
+            }
+        }.execute(JSONFactory.createLike(post.getId()));
+    }
+
+    private void fetchLikeCount(final TextView textView) {
+        new HttpRequestTask("liked_count") {
+            @Override
+            protected void atPostExecute(JSONObject jsonObject) {
+                textView.setText("Likes: " + JSONParser.parseLikedCount(jsonObject, getActivity()));
+            }
+        }.execute(JSONFactory.createLike(post.getId()));
+    }
+
+    private void toggleLike(Button button) {
+        if (post.isLiked()) {
+            post.setLiked(false);
+            button.setText("Like");
+            button.setTextColor(getResources().getColor(R.color.normalColor));
+        } else {
+            post.setLiked(true);
+            button.setText("Liked!");
+            button.setTextColor(getResources().getColor(R.color.toogleColor));
+        }
     }
 
     private void initBottomContainer(FrameLayout frameLayout, LayoutInflater layoutInflater, ViewGroup viewGroup) {
