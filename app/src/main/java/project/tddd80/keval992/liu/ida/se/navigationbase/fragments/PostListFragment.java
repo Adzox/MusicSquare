@@ -86,6 +86,7 @@ public class PostListFragment extends ModelListFragment<Post> {
     }
 
     private void onItemsReceived(JSONObject jsonObject) {
+        ResultsReceiver.newSearch();
         try {
             JSONParser.parseJSONObject(jsonObject);
         } catch (JSONException e) {
