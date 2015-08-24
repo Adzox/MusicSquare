@@ -39,6 +39,17 @@ public final class JSONParser {
         return jsonObject != null && !jsonObject.has("error");
     }
 
+    public static int getOtherInt(JSONObject jsonObject) {
+        if (jsonObject.has("other")) {
+            try {
+                return jsonObject.getInt("other");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return Integer.MIN_VALUE;
+    }
+
     public static String extractError(JSONObject jsonObject) {
         try {
             if (jsonObject != null) {
