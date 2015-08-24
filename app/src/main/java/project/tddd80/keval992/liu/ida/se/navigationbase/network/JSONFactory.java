@@ -149,4 +149,16 @@ public final class JSONFactory {
         }
         return createSendFormat("", object);
     }
+
+    public static JSONObject createNewComment(String text, int postId) {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("message", text);
+            object.put("postId", postId);
+            object.put("userId", LoginInfo.getUserId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return createSendFormat("comment", object);
+    }
 }
