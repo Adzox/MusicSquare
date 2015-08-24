@@ -118,4 +118,14 @@ public final class JSONFactory {
         }
         return createSendFormat("pageFavorited", object);
     }
+
+    public static JSONObject createPostIdData(int postId) {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("postId", postId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return createSendFormat("", object);
+    }
 }
