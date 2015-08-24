@@ -1,7 +1,13 @@
 package project.tddd80.keval992.liu.ida.se.navigationbase.fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,7 +16,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import project.tddd80.keval992.liu.ida.se.navigationbase.R;
+import project.tddd80.keval992.liu.ida.se.navigationbase.adapters.CardViewHolder;
 import project.tddd80.keval992.liu.ida.se.navigationbase.main.ResultsReceiver;
+import project.tddd80.keval992.liu.ida.se.navigationbase.models.CardViewModel;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Comment;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Page;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Post;
@@ -26,6 +35,7 @@ import project.tddd80.keval992.liu.ida.se.navigationbase.network.JSONParser;
 public class CommentListFragment extends ModelListFragment<Comment> {
 
     private Post post;
+    private EditText comment;
 
     public CommentListFragment() {
     }
@@ -40,6 +50,50 @@ public class CommentListFragment extends ModelListFragment<Comment> {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadModels();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        FrameLayout topContainer = (FrameLayout) view.findViewById(R.id.topContainer);
+        initTopContainer(topContainer, inflater, container);
+        FrameLayout bottomContainer = (FrameLayout) view.findViewById(R.id.bottomContainer);
+        initBottomContainer(bottomContainer, inflater, container);
+        return view;
+    }
+
+    private void initTopContainer(FrameLayout frameLayout, LayoutInflater layoutInflater, ViewGroup viewGroup) {
+        View v = layoutInflater.inflate(R.layout.layout_card, viewGroup);
+        CardViewHolder cardViewHolder = new CardViewHolder(v);
+        cardViewHolder.setCardViewModel(new CardViewModel(post));
+        frameLayout.addView(v);
+    }
+
+    private void initBottomContainer(FrameLayout frameLayout, LayoutInflater layoutInflater, ViewGroup viewGroup) {
+        View v = layoutInflater.inflate(R.layout.layout_text_button, viewGroup);
+        comment = (EditText) v.findViewById(R.id.text_field);
+        Button button = (Button) v.findViewById(R.id.send_button);
+        button.setText("Send");
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendComment();
+            }
+        });
+    }
+
+    private void sendComment() {
+        String text = comment.getText().toString();
+        new HttpRequestTask("new") {
+            @Override
+            protected void atPostExecute(JSONObject jsonObject) {
+                if (JSONParser.wasSuccessful(jsonObject)) {
+                    fetchComments();
+                } else {
+                    Toast.makeText(getActivity(), JSONParser.extractError(jsonObject), Toast.LENGTH_SHORT).show();
+                }
+            }
+        }.execute(JSONFactory.createNewComment(text, post.getId()));
     }
 
     public final void loadModels() {
