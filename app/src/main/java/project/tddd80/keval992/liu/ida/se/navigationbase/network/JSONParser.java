@@ -176,10 +176,10 @@ public final class JSONParser {
 
     // IF PAGE IN MEMORY WHILE LOOKING AT POSTS, DON'T SEND IT! SAVE IT AND ACCESS WITH ID!
     private static Post parsePost(JSONArray post) throws JSONException {
-        JSONObject p = post.getJSONObject(0);
+        JSONObject p = post.getJSONObject(0).getJSONObject("post");
         if (post.length() < 4) {
-            return new Post(p.getInt("id"), p.getString("dateSent"), parseUser(post.getJSONArray(1)),
-                    parsePage(post.getJSONArray(2)), p.getString("message"), false);
+            return new Post(p.getInt("id"), p.getString("dateSent"), parseUser(post.getJSONObject(1).getJSONArray("user")),
+                    parsePage(post.getJSONObject(2).getJSONArray("page")), p.getString("message"), false);
         } else {
             JSONObject l = post.getJSONObject(3);
             return new Post(p.getInt("id"), p.getString("dateSent"), parseUser(post.getJSONArray(1)),

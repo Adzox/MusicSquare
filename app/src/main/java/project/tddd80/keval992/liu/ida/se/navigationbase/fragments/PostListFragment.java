@@ -4,13 +4,20 @@ package project.tddd80.keval992.liu.ida.se.navigationbase.fragments;
 import android.os.Bundle;
 import android.view.View;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import project.tddd80.keval992.liu.ida.se.navigationbase.adapters.PostRecyclerViewAdapter;
+import project.tddd80.keval992.liu.ida.se.navigationbase.main.ResultsReceiver;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Page;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Post;
 import project.tddd80.keval992.liu.ida.se.navigationbase.network.HttpRequestTask;
 import project.tddd80.keval992.liu.ida.se.navigationbase.network.JSONFactory;
+import project.tddd80.keval992.liu.ida.se.navigationbase.network.JSONParser;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -60,7 +67,7 @@ public class PostListFragment extends ModelListFragment<Post> {
 
                     @Override
                     protected void atPostExecute(JSONObject jsonObject) {
-
+                        onItemsReceived(jsonObject);
                     }
                 }.execute(JSONFactory.createGlobalNewsData(NUMBER_OF_POSTS));
                 break;
@@ -69,13 +76,29 @@ public class PostListFragment extends ModelListFragment<Post> {
 
                     @Override
                     protected void atPostExecute(JSONObject jsonObject) {
-
+                        onItemsReceived(jsonObject);
                     }
                 }.execute(JSONFactory.createFavoriteNewsData(NUMBER_OF_POSTS));
                 break;
             case MODE_PAGE_POSTS:
                 break;
         }
+    }
+
+    private void onItemsReceived(JSONObject jsonObject) {
+        try {
+            JSONParser.parseJSONObject(jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        List<Post> posts = new ArrayList<>();
+        List<Serializable> serializables = ResultsReceiver.getResults(Post.class);
+        if (serializables != null && !serializables.isEmpty()) {
+            for (Serializable serializable : serializables) {
+                posts.add((Post) serializable);
+            }
+        }
+        setItems(posts);
     }
 
     @Override

@@ -63,6 +63,9 @@ public abstract class ModelListFragment<Model extends Serializable> extends Frag
 
     public final void setItems(List<Model> models) {
         modelRecyclerViewAdapter.getModels().clear();
+        for (int n = modelRecyclerViewAdapter.getItemCount() - 1; n >= 0; n--) {
+            modelRecyclerViewAdapter.notifyItemRemoved(n);
+        }
         modelRecyclerViewAdapter.getModels().addAll(models);
         modelRecyclerViewAdapter.notifyDataSetChanged();
     }
