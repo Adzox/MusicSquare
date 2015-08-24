@@ -44,6 +44,7 @@ public class PageFragment extends Fragment implements View.OnClickListener {
         page.setProfileImage(profileImage);
         setPageCard(view.findViewById(R.id.page_card), page);
         setInfoCard(view.findViewById(R.id.info_card), page);
+        toogleFavoriteButton();
         return view;
     }
 
@@ -88,17 +89,18 @@ public class PageFragment extends Fragment implements View.OnClickListener {
                 }
             }
         }.execute(JSONFactory.createFavoriteData(page.getId()));
+
     }
 
     private void toogleFavoriteButton() {
         if (!page.isUserMember()) {
             if (page.isHasUserFavorited()) {
-                favorite.setText("Remove from favorites");
-                favorite.setBackgroundColor(getResources().getColor(R.color.normalColor));
+                favorite.setText("Add page to favorites");
+                favorite.setTextColor(getResources().getColor(R.color.normalColor));
                 page.setHasUserFavorited(false);
             } else {
-                favorite.setText("Add to favorites");
-                favorite.setBackgroundColor(getResources().getColor(R.color.toogleColor));
+                favorite.setText("Remove page from favorites");
+                favorite.setTextColor(getResources().getColor(R.color.toogleColor));
                 page.setHasUserFavorited(true);
             }
         } else {
