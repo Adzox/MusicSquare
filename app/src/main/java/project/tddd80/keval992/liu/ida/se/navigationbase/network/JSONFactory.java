@@ -128,4 +128,25 @@ public final class JSONFactory {
         }
         return createSendFormat("", object);
     }
+
+    public static JSONObject createGlobalNewsData(int numberOfPosts) {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("number", numberOfPosts);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return createSendFormat("", object);
+    }
+
+    public static JSONObject createFavoriteNewsData(int numberOfPosts) {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("number", numberOfPosts);
+            object.put("id", LoginInfo.getUserId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return createSendFormat("", object);
+    }
 }
