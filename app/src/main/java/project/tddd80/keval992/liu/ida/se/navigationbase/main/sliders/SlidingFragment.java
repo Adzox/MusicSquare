@@ -46,5 +46,9 @@ public abstract class SlidingFragment extends Fragment {
         return view;
     }
 
+    protected void addFragment(String title, Fragment fragment) {
+        adapter.addFragment(title, fragment);
+    }
+
     protected abstract void initAdapter();
 }
