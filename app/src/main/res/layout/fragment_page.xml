@@ -46,6 +46,13 @@
                 android:layout_height="wrap_content"
                 android:text="LL" />
 
+            <Button
+                android:id="@+id/favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Add to favorites" />
+
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
