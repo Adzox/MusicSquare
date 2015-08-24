@@ -19,6 +19,8 @@ import project.tddd80.keval992.liu.ida.se.navigationbase.network.JSONFactory;
 import project.tddd80.keval992.liu.ida.se.navigationbase.network.JSONParser;
 
 /**
+ * Simple fragment to display the post-comment fragment.
+ *
  * Created by kevin on 2015-08-24.
  */
 public class CommentListFragment extends ModelListFragment<Comment> {
