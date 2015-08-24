@@ -155,7 +155,7 @@ public final class JSONFactory {
         try {
             object.put("message", text);
             object.put("postId", postId);
-            object.put("userId", LoginInfo.getUserId());
+            object.put("senderId", LoginInfo.getUserId());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -166,7 +166,7 @@ public final class JSONFactory {
         JSONObject object = new JSONObject();
         try {
             object.put("message", message);
-            object.put("pageId", pageId);
+            object.put("ownerId", pageId);
             object.put("userId", LoginInfo.getUserId());
         } catch (JSONException e) {
             e.printStackTrace();
