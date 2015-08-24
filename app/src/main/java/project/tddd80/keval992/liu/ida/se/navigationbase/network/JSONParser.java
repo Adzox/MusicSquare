@@ -1,5 +1,6 @@
 package project.tddd80.keval992.liu.ida.se.navigationbase.network;
 
+import android.app.Activity;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -37,17 +38,6 @@ public final class JSONParser {
 
     public static boolean wasSuccessful(JSONObject jsonObject) {
         return jsonObject != null && !jsonObject.has("error");
-    }
-
-    public static int getOtherInt(JSONObject jsonObject) {
-        if (jsonObject.has("other")) {
-            try {
-                return jsonObject.getInt("other");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        return Integer.MIN_VALUE;
     }
 
     public static String extractError(JSONObject jsonObject) {
@@ -227,5 +217,21 @@ public final class JSONParser {
             members.add(parseUser(users.getJSONObject(n).getJSONArray("user")));
         }
         return members;
+    }
+
+    public static String parseLikedCount(JSONObject jsonObject, Activity activity) {
+        if (jsonObject != null) {
+            try {
+                if (jsonObject.has("error")) {
+                    String error = jsonObject.getString("error");
+                    Toast.makeText(activity, error, Toast.LENGTH_SHORT).show();
+                } else if (jsonObject.has("result")) {
+                    return "" + jsonObject.getInt("result");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return "?";
     }
 }
