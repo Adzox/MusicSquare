@@ -19,6 +19,7 @@ import project.tddd80.keval992.liu.ida.se.navigationbase.R;
 import project.tddd80.keval992.liu.ida.se.navigationbase.fragments.LoginFragment;
 import project.tddd80.keval992.liu.ida.se.navigationbase.fragments.PageListFragment;
 import project.tddd80.keval992.liu.ida.se.navigationbase.fragments.PostListFragment;
+import project.tddd80.keval992.liu.ida.se.navigationbase.main.sliders.SlidingFragment;
 
 
 /**
@@ -99,9 +100,17 @@ public class MenuFragment extends Fragment implements NavigationView.OnNavigatio
                         .commit();
                 break;
             case R.id.navigator_news:
-                PostListFragment postListFragment = PostListFragment.newInstanceFavorites();
+                SlidingFragment slidingFragment = new SlidingFragment() {
+                    @Override
+                    protected void initAdapter() {
+                        addFragment("Global News", PostListFragment.newInstanceGlobal());
+                        if (LoginInfo.hasLoggedIn()) {
+                            addFragment("News from favorites", PostListFragment.newInstanceFavorites());
+                        }
+                    }
+                };
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.menu_content, postListFragment)
+                        .replace(R.id.menu_content, slidingFragment)
                         .addToBackStack(null)
                         .commit();
                 break;
