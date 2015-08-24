@@ -2,77 +2,84 @@ package project.tddd80.keval992.liu.ida.se.navigationbase.fragments;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import java.util.List;
+import org.json.JSONObject;
 
-import project.tddd80.keval992.liu.ida.se.navigationbase.R;
 import project.tddd80.keval992.liu.ida.se.navigationbase.adapters.PostRecyclerViewAdapter;
+import project.tddd80.keval992.liu.ida.se.navigationbase.models.Page;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Post;
+import project.tddd80.keval992.liu.ida.se.navigationbase.network.HttpRequestTask;
+import project.tddd80.keval992.liu.ida.se.navigationbase.network.JSONFactory;
 
 /**
- * A simple {@link Fragment} subclass.
+ * A simple {@link android.support.v4.app.Fragment} subclass.
  */
-public class PostListFragment extends Fragment {
+public class PostListFragment extends ModelListFragment<Post> {
 
-    private RecyclerView recyclerView;
-    private int pagePostId = -1;
-    private boolean favorites = false;
-    private PostRecyclerViewAdapter postRecyclerViewAdapter;
+    public static final int MODE_GLOBAL_NEWS = 0;
+    public static final int MODE_FAVORITED_NEWS = 1;
+    public static final int MODE_PAGE_POSTS = 2;
+    private static final int NUMBER_OF_POSTS = 30;
+    private int mode;
+    private Page page;
 
-    public PostListFragment() {
-    }
-
-    public static final PostListFragment loadPagePosts(int pageId) {
+    public static final PostListFragment newInstanceGlobal() {
         PostListFragment postListFragment = new PostListFragment();
-        postListFragment.pagePostId = pageId;
+        postListFragment.setModelRecyclerViewAdapterClass(PostRecyclerViewAdapter.class);
+        postListFragment.mode = MODE_GLOBAL_NEWS;
         return postListFragment;
     }
 
-    public static final PostListFragment loadFavorites() {
+    public static final PostListFragment newInstanceFavorites() {
         PostListFragment postListFragment = new PostListFragment();
-        postListFragment.favorites = true;
+        postListFragment.setModelRecyclerViewAdapterClass(PostRecyclerViewAdapter.class);
+        postListFragment.mode = MODE_FAVORITED_NEWS;
         return postListFragment;
     }
 
-    public static final PostListFragment loadGlobals() {
-        return new PostListFragment();
+    public static final PostListFragment newInstance(Page page) {
+        PostListFragment postListFragment = new PostListFragment();
+        postListFragment.setModelRecyclerViewAdapterClass(PostRecyclerViewAdapter.class);
+        postListFragment.mode = MODE_PAGE_POSTS;
+        postListFragment.page = page;
+        return postListFragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        getModels();
+    }
+
+    protected void getModels() {
+        switch (mode) {
+            default:
+            case MODE_GLOBAL_NEWS:
+                new HttpRequestTask("news") {
+
+                    @Override
+                    protected void atPostExecute(JSONObject jsonObject) {
+
+                    }
+                }.execute(JSONFactory.createGlobalNewsData(NUMBER_OF_POSTS));
+                break;
+            case MODE_FAVORITED_NEWS:
+                new HttpRequestTask("news") {
+
+                    @Override
+                    protected void atPostExecute(JSONObject jsonObject) {
+
+                    }
+                }.execute(JSONFactory.createFavoriteNewsData(NUMBER_OF_POSTS));
+                break;
+            case MODE_PAGE_POSTS:
+                break;
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_post_list, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.post_list_list);
-        if (pagePostId > -1) {
-            // LOAD PAGES POSTS
-        } else if (favorites) {
-            // LOAD FAVORITED RECENT POSTS
-        } else {
-            // LOAD GLOBAL RECENT POSTS
-        }
-        setUpRecyclerView(null);
-
-        return view;
-    }
-
-    private void setUpRecyclerView(List<Post> posts) {
-        postRecyclerViewAdapter = new PostRecyclerViewAdapter(posts);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        layoutManager.scrollToPosition(0);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(postRecyclerViewAdapter);
+    protected void itemClicked(View view, int position) {
+        // Go to post-comment fragment on click.
     }
 }

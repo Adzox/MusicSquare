@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import project.tddd80.keval992.liu.ida.se.navigationbase.R;
 import project.tddd80.keval992.liu.ida.se.navigationbase.fragments.LoginFragment;
 import project.tddd80.keval992.liu.ida.se.navigationbase.fragments.PageListFragment;
-import project.tddd80.keval992.liu.ida.se.navigationbase.fragments.PostListFragment2;
+import project.tddd80.keval992.liu.ida.se.navigationbase.fragments.PostListFragment;
 
 
 /**
@@ -99,9 +99,9 @@ public class MenuFragment extends Fragment implements NavigationView.OnNavigatio
                         .commit();
                 break;
             case R.id.navigator_news:
-                PostListFragment2 postListFragment2 = PostListFragment2.newInstanceFavorites();
+                PostListFragment postListFragment = PostListFragment.newInstanceFavorites();
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.menu_content, postListFragment2)
+                        .replace(R.id.menu_content, postListFragment)
                         .addToBackStack(null)
                         .commit();
                 break;
