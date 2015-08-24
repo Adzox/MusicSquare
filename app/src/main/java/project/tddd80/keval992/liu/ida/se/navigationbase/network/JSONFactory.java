@@ -173,4 +173,15 @@ public final class JSONFactory {
         }
         return createSendFormat("posts", object);
     }
+
+    public static JSONObject createLike(int postId) {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("postId", postId);
+            object.put("userId", LoginInfo.getUserId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return createSendFormat("likes", object);
+    }
 }
