@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import project.tddd80.keval992.liu.ida.se.navigationbase.R;
 import project.tddd80.keval992.liu.ida.se.navigationbase.fragments.LoginFragment;
 import project.tddd80.keval992.liu.ida.se.navigationbase.fragments.PageListFragment;
-import project.tddd80.keval992.liu.ida.se.navigationbase.fragments.PostListFragment;
+import project.tddd80.keval992.liu.ida.se.navigationbase.fragments.PostListFragment2;
 
 
 /**
@@ -99,9 +99,9 @@ public class MenuFragment extends Fragment implements NavigationView.OnNavigatio
                         .commit();
                 break;
             case R.id.navigator_news:
-                PostListFragment postListFragment = new PostListFragment();
+                PostListFragment2 postListFragment2 = PostListFragment2.newInstanceFavorites();
                 getFragmentManager().beginTransaction()
-                        .add(R.id.menu_content, postListFragment)
+                        .replace(R.id.menu_content, postListFragment2)
                         .addToBackStack(null)
                         .commit();
                 break;
@@ -113,18 +113,18 @@ public class MenuFragment extends Fragment implements NavigationView.OnNavigatio
                         .addToBackStack(null)
                         .commit();
                 break;
+            */
             case R.id.navigator_favorites:
-                PostListFragment postListFragment = new PostListFragment();
+                PageListFragment pageListFragment = PageListFragment.newInstance(PageListFragment.MODE_FAVORITES);
                 getFragmentManager().beginTransaction()
-                        .add(R.id.menu_content, postListFragment)
+                        .replace(R.id.menu_content, pageListFragment)
                         .addToBackStack(null)
                         .commit();
                 break;
-            */
             case R.id.navigator_pages:
                 Fragment fragment = PageListFragment.newInstance(PageListFragment.MODE_MEMBERSHIPED);
                 getFragmentManager().beginTransaction()
-                        .add(R.id.menu_content, fragment)
+                        .replace(R.id.menu_content, fragment)
                         .addToBackStack(null)
                         .commit();
                 break;

@@ -69,7 +69,7 @@ public class PageListFragment extends ModelListFragment<Page> {
                 try {
                     JSONParser.parseJSONObject(jsonObject);
                     List<Serializable> serializables = ResultsReceiver.getResults(Page.class);
-                    if (!serializables.isEmpty()) {
+                    if (serializables != null && !serializables.isEmpty()) {
                         for (Serializable serializable : serializables) {
                             pages.add((Page) serializable);
                         }
