@@ -2,10 +2,11 @@ package project.tddd80.keval992.liu.ida.se.navigationbase.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,10 +43,31 @@ public class PageListFragment extends ModelListFragment<Page> {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (mode == MODE_MEMBERSHIPED) {
-            setHasOptionsMenu(true);
-        }
         loadModels();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        if (mode == MODE_MEMBERSHIPED) {
+            FrameLayout bottomContainer = (FrameLayout) view.findViewById(R.id.bottomContainer);
+            initBottomContainer(bottomContainer);
+        }
+        return view;
+    }
+
+    private void initBottomContainer(FrameLayout frameLayout) {
+        Button button = new Button(getActivity());
+        button.setText("Create new page");
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.menu_content, new CreatePageFragment())
+                        .commit();
+            }
+        });
+        frameLayout.addView(button);
     }
 
     public final void loadModels() {
@@ -83,25 +105,6 @@ public class PageListFragment extends ModelListFragment<Page> {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.add_button, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.add_button:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.menu_content, new CreatePageFragment())
-                        .commit();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
     protected void itemClicked(View view, int position) {
         final Page page = getItem(position);
         SlidingFragment slidingFragment = new SlidingFragment() {
@@ -109,7 +112,7 @@ public class PageListFragment extends ModelListFragment<Page> {
             protected void initAdapter() {
                 addFragment("Information", PageFragment.newInstance(page));
                 addFragment("Members", UserListFragment.newInstance(page));
-                addFragment("Posts", PostListFragment2.newInstance(page));
+                addFragment("Posts", PostListFragment.newInstance(page));
             }
         };
         getFragmentManager().beginTransaction()
