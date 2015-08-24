@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -97,5 +98,10 @@ public class PageListFragment extends ModelListFragment<Page> {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void itemClicked(View view, int position) {
+        // Go to special SlidingFragment with PageFragment, UserListFragment and PostListFragment2.
     }
 }
