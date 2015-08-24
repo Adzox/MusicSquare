@@ -2,8 +2,10 @@ package project.tddd80.keval992.liu.ida.se.navigationbase.fragments;
 
 
 import android.os.Bundle;
+import android.view.View;
 
 import project.tddd80.keval992.liu.ida.se.navigationbase.adapters.PostRecyclerViewAdapter;
+import project.tddd80.keval992.liu.ida.se.navigationbase.models.Page;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Post;
 
 /**
@@ -15,17 +17,27 @@ public class PostListFragment2 extends ModelListFragment<Post> {
     public static final int MODE_FAVORITED_NEWS = 1;
     public static final int MODE_PAGE_POSTS = 2;
     private int mode;
-    private int pageId;
+    private Page page;
 
-    public static final PostListFragment2 newInstance(int mode) {
-        return newInstance(mode, -1);
-    }
-
-    public static final PostListFragment2 newInstance(int mode, int pageId) {
+    public static final PostListFragment2 newInstanceGlobal() {
         PostListFragment2 postListFragment2 = new PostListFragment2();
         postListFragment2.setModelRecyclerViewAdapterClass(PostRecyclerViewAdapter.class);
-        postListFragment2.mode = mode;
-        postListFragment2.pageId = pageId;
+        postListFragment2.mode = MODE_GLOBAL_NEWS;
+        return postListFragment2;
+    }
+
+    public static final PostListFragment2 newInstanceFavorites() {
+        PostListFragment2 postListFragment2 = new PostListFragment2();
+        postListFragment2.setModelRecyclerViewAdapterClass(PostRecyclerViewAdapter.class);
+        postListFragment2.mode = MODE_FAVORITED_NEWS;
+        return postListFragment2;
+    }
+
+    public static final PostListFragment2 newInstance(Page page) {
+        PostListFragment2 postListFragment2 = new PostListFragment2();
+        postListFragment2.setModelRecyclerViewAdapterClass(PostRecyclerViewAdapter.class);
+        postListFragment2.mode = MODE_PAGE_POSTS;
+        postListFragment2.page = page;
         return postListFragment2;
     }
 
@@ -42,5 +54,10 @@ public class PostListFragment2 extends ModelListFragment<Post> {
             case MODE_FAVORITED_NEWS:
             case MODE_PAGE_POSTS:
         }
+    }
+
+    @Override
+    protected void itemClicked(View view, int position) {
+        // Go to post-comment fragment.
     }
 }

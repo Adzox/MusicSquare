@@ -67,6 +67,10 @@ public abstract class ModelListFragment<Model extends Serializable> extends Frag
         modelRecyclerViewAdapter.notifyDataSetChanged();
     }
 
+    public final Model getItem(int position) {
+        return modelRecyclerViewAdapter.getModels().get(position);
+    }
+
     // For the application to work, this Reflection method must always work!
     // Since all adapters extending ModelRecyclerViewAdapter must have a constructor with the
     // first argument a list, the likelyhood of this method failing is slim.
