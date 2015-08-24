@@ -55,6 +55,11 @@ public class UserListFragment extends ModelListFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (enableAdd) setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         setItems(users);
     }
 
