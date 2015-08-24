@@ -41,6 +41,13 @@ public abstract class ModelListFragment<Model extends Serializable> extends Frag
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_model_list, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.model_list_list);
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(),
+                new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        ModelListFragment.this.itemClicked(view, position);
+                    }
+                }));
         setUpRecyclerView();
         return view;
     }
@@ -77,4 +84,6 @@ public abstract class ModelListFragment<Model extends Serializable> extends Frag
         }
         return null;
     }
+
+    protected abstract void itemClicked(View view, int position);
 }

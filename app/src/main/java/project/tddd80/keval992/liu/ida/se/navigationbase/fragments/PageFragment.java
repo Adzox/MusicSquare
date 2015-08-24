@@ -11,7 +11,7 @@ import project.tddd80.keval992.liu.ida.se.navigationbase.R;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Page;
 
 /**
- * A simple {@link Fragment} subclass for displaying a page.
+ * A simple {@link Fragment} subclass for displaying a pages members and information.
  */
 public class PageFragment extends Fragment {
 
@@ -31,4 +31,6 @@ public class PageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_page, container, false);
         return view;
     }
+
+
 }
