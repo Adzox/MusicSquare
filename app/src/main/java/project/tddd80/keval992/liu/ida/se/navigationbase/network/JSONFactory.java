@@ -159,6 +159,18 @@ public final class JSONFactory {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return createSendFormat("comment", object);
+        return createSendFormat("comments", object);
+    }
+
+    public static JSONObject createNewPost(String message, int pageId) {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("message", message);
+            object.put("pageId", pageId);
+            object.put("userId", LoginInfo.getUserId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return createSendFormat("posts", object);
     }
 }
