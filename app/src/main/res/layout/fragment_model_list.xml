@@ -10,7 +10,7 @@
         android:layout_height="wrap_content" />
 
 
-    <SwipeRefreshLayout
+    <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/model_list_swipe"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </SwipeRefreshLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <FrameLayout
         android:id="@+id/bottomContainer"

@@ -188,6 +188,7 @@ public class CommentListFragment extends ModelListFragment<Comment> {
                         }
                     }
                     setItems(comments);
+                    doneFetching();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -152,6 +152,7 @@ public class PostListFragment extends ModelListFragment<Post> {
             }
         }
         setItems(posts);
+        doneFetching();
     }
 
     @Override

@@ -96,6 +96,7 @@ public class PageListFragment extends ModelListFragment<Page> {
                         }
                     }
                     setItems(pages);
+                    doneFetching();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

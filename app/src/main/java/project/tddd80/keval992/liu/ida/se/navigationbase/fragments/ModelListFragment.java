@@ -92,4 +92,8 @@ public abstract class ModelListFragment<Model extends Serializable> extends Frag
     @Override
     public void onRefresh() {
     }
+
+    protected void doneFetching() {
+        swipeRefreshLayout.setRefreshing(false);
+    }
 }
