@@ -11,13 +11,12 @@ import project.tddd80.keval992.liu.ida.se.navigationbase.network.PreferencesMana
  */
 public class LoginInfo implements Serializable {
 
-    public static final LoginInfo LOGIN_INFO = new LoginInfo(-1, false);
-
     private static final String USER_ID = "User ID";
     private static final String LOGGED_IN = "Logged in";
     private static final String ADVANCED_USER = "Advanced user";
     private static String registrationId;
-    private static LoginInfo loginInfo;
+    private static LoginInfo loginInfo = new LoginInfo(-1, false);
+    ;
     private static boolean hasLoggedIn;
     private int userId;
     private boolean isAdvancedUser;
@@ -45,11 +44,11 @@ public class LoginInfo implements Serializable {
     }
 
     public static int getUserId() {
-        return LOGIN_INFO.userId;
+        return loginInfo.userId;
     }
 
     public static boolean isAdvancedUser() {
-        return LOGIN_INFO.isAdvancedUser;
+        return loginInfo.isAdvancedUser;
     }
 
     public static String getRegistrationId() {
@@ -63,8 +62,8 @@ public class LoginInfo implements Serializable {
     }
 
     public static void loadFromPreferences(Activity activity) {
-        LOGIN_INFO.userId = Integer.parseInt(PreferencesManager.readFromPreferences(activity, USER_ID, "-1"));
+        loginInfo.userId = Integer.parseInt(PreferencesManager.readFromPreferences(activity, USER_ID, "-1"));
         hasLoggedIn = Boolean.parseBoolean(PreferencesManager.readFromPreferences(activity, LOGGED_IN, "false"));
-        LOGIN_INFO.isAdvancedUser = Boolean.parseBoolean(PreferencesManager.readFromPreferences(activity, ADVANCED_USER, "false"));
+        loginInfo.isAdvancedUser = Boolean.parseBoolean(PreferencesManager.readFromPreferences(activity, ADVANCED_USER, "false"));
     }
 }
