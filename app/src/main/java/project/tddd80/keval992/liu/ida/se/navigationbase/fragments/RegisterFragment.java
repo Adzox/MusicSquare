@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -24,7 +23,7 @@ import project.tddd80.keval992.liu.ida.se.navigationbase.network.JSONParser;
 public class RegisterFragment extends Fragment implements View.OnClickListener {
 
     private EditText username, name, password, repeated, information;
-    private AutoCompleteTextView location;
+    private LocationViewHolder locationViewHolder;
     private boolean advanced = false;
 
     public RegisterFragment() {
@@ -41,13 +40,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         View view;
         if (advanced) {
             view = inflater.inflate(R.layout.fragment_register_advanced, container, false);
-            location = (AutoCompleteTextView) view.findViewById(R.id.location);
-            ((Button) view.findViewById(R.id.currentLocation)).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
+            locationViewHolder = new LocationViewHolder(view, getActivity());
             information = (EditText) view.findViewById(R.id.information);
         } else {
             view = inflater.inflate(R.layout.fragment_register, container, false);
@@ -59,7 +52,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         ((Button) view.findViewById(R.id.register)).setOnClickListener(this);
         return view;
     }
-
 
     @Override
     public void onClick(View v) {
@@ -73,7 +65,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             repeated.setText("");
         } else {
             if (advanced) {
-                String loc = location.getText().toString();
+                String loc = locationViewHolder.getLocation();
                 String info = information.getText().toString();
                 new HttpRequestTask("new-advanced") {
 
