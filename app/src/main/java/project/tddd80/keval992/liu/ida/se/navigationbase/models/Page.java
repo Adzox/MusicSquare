@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import java.io.Serializable;
 import java.util.List;
 
+import project.tddd80.keval992.liu.ida.se.navigationbase.main.LoginInfo;
 import project.tddd80.keval992.liu.ida.se.navigationbase.network.ImageLoader;
 
 /**
@@ -100,7 +101,18 @@ public class Page implements Serializable {
     }
 
     public boolean isUserMember() {
-        return isUserMember;
+        if (isUserMember) {
+            return true;
+        } else {
+            if (members != null && !members.isEmpty()) {
+                for (User u : members) {
+                    if (u.getBaseUser().getId() == LoginInfo.getUserId()) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     }
 
     public void setUserMember(boolean isUserMember) {
