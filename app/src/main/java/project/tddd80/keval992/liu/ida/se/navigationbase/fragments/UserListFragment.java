@@ -103,6 +103,7 @@ public class UserListFragment extends ModelListFragment {
     @Override
     public void onRefresh() {
         super.onRefresh();
+        doneFetching();
         // MAYBE IMPLEMENT REFRESH FETCHING FROM SERVER.
     }
 }
