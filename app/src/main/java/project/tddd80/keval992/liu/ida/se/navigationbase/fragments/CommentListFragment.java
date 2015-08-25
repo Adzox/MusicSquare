@@ -24,7 +24,6 @@ import project.tddd80.keval992.liu.ida.se.navigationbase.adapters.CommentRecycle
 import project.tddd80.keval992.liu.ida.se.navigationbase.main.ResultsReceiver;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.CardViewModel;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Comment;
-import project.tddd80.keval992.liu.ida.se.navigationbase.models.Page;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Post;
 import project.tddd80.keval992.liu.ida.se.navigationbase.network.HttpRequestTask;
 import project.tddd80.keval992.liu.ida.se.navigationbase.network.JSONFactory;
@@ -178,7 +177,7 @@ public class CommentListFragment extends ModelListFragment<Comment> {
             protected void atPostExecute(JSONObject jsonObject) {
                 try {
                     JSONParser.parseJSONObject(jsonObject);
-                    List<Serializable> serializables = ResultsReceiver.getResults(Page.class);
+                    List<Serializable> serializables = ResultsReceiver.getResults(Comment.class);
                     if (serializables != null && !serializables.isEmpty()) {
                         for (Serializable serializable : serializables) {
                             comments.add((Comment) serializable);
