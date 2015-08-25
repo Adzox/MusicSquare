@@ -194,4 +194,10 @@ public class CommentListFragment extends ModelListFragment<Comment> {
             }
         }.execute(JSONFactory.createPostIdData(post.getId()));
     }
+
+    @Override
+    public void onRefresh() {
+        super.onRefresh();
+        fetchComments();
+    }
 }

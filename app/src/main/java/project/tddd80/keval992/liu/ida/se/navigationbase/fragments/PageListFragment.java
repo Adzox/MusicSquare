@@ -102,4 +102,10 @@ public class PageListFragment extends ModelListFragment<Page> {
             }
         }.execute(JSONFactory.createIdData());
     }
+
+    @Override
+    public void onRefresh() {
+        super.onRefresh();
+        loadModels();
+    }
 }

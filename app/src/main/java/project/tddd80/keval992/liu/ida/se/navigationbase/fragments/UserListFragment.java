@@ -99,4 +99,10 @@ public class UserListFragment extends ModelListFragment {
         super.onStart();
         setItems(users);
     }
+
+    @Override
+    public void onRefresh() {
+        super.onRefresh();
+        // MAYBE IMPLEMENT REFRESH FETCHING FROM SERVER.
+    }
 }

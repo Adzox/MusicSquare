@@ -9,12 +9,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/model_list_list"
+
+    <SwipeRefreshLayout
+        android:id="@+id/model_list_swipe"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_above="@+id/bottomContainer"
-        android:layout_below="@+id/topContainer" />
+        android:layout_below="@+id/topContainer">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/model_list_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </SwipeRefreshLayout>
 
     <FrameLayout
         android:id="@+id/bottomContainer"

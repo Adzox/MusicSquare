@@ -4,6 +4,7 @@ package project.tddd80.keval992.liu.ida.se.navigationbase.fragments;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,8 +22,9 @@ import project.tddd80.keval992.liu.ida.se.navigationbase.adapters.ModelRecyclerV
 /**
  * A simple {@link Fragment} subclass with a recyclerView used to display a model in a list..
  */
-public abstract class ModelListFragment<Model extends Serializable> extends Fragment {
+public abstract class ModelListFragment<Model extends Serializable> extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private Class modelRecyclerViewAdapterClass;
     private ModelRecyclerViewAdapter<Model> modelRecyclerViewAdapter;
@@ -41,7 +43,9 @@ public abstract class ModelListFragment<Model extends Serializable> extends Frag
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_model_list, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.model_list_list);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.model_list_swipe);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        recyclerView = (RecyclerView) swipeRefreshLayout.findViewById(R.id.model_list_list);
         setUpRecyclerView();
         return view;
     }
@@ -83,5 +87,9 @@ public abstract class ModelListFragment<Model extends Serializable> extends Frag
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public void onRefresh() {
     }
 }

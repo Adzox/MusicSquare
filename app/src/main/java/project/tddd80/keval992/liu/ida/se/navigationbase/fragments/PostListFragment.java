@@ -153,4 +153,10 @@ public class PostListFragment extends ModelListFragment<Post> {
         }
         setItems(posts);
     }
+
+    @Override
+    public void onRefresh() {
+        super.onRefresh();
+        getModels();
+    }
 }
