@@ -189,9 +189,9 @@ public final class JSONParser {
     }
 
     private static Comment parseComment(JSONArray comment) throws JSONException {
-        JSONObject c = comment.getJSONObject(0);
+        JSONObject c = comment.getJSONObject(0).getJSONObject("comment");
         return new Comment(c.getInt("id"), Post.getPost(c.getInt("postId")), c.getString("dateSent"),
-                parseUser(comment.getJSONArray(1)), c.getString("message"));
+                parseUser(comment.getJSONObject(1).getJSONArray("user")), c.getString("message"));
     }
 
     private static Message parseMessage(JSONArray message) throws JSONException {
