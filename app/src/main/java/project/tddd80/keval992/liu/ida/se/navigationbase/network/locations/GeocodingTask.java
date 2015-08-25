@@ -50,6 +50,12 @@ public abstract class GeocodingTask implements GoogleApiClient.ConnectionCallbac
                 whenComplete(addresses);
                 if (mGoogleApiClient.isConnected()) mGoogleApiClient.disconnect();
             }
+
+            @Override
+            protected void onCancelled() {
+                super.onCancelled();
+                if (mGoogleApiClient.isConnected()) mGoogleApiClient.disconnect();
+            }
         }.execute();
     }
 
