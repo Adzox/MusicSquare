@@ -157,9 +157,15 @@ public class PostListFragment extends ModelListFragment<Post> {
 
     @Override
     protected void itemClicked(View view, int position) {
-        Fragment fragment = CommentListFragment.newInstance(getItem(position));
-        getFragmentManager().beginTransaction()
-                .replace(R.id.menu_content, fragment)
-                .commit();
+        if (view.getId() == R.id.card_title) {
+            System.out.println("CARD TITLE");
+        } else if (view.getId() == R.id.card_subtitle) {
+            System.out.println("CARD SUBTITLE");
+        } else {
+            Fragment fragment = CommentListFragment.newInstance(getItem(position));
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.menu_content, fragment)
+                    .commit();
+        }
     }
 }

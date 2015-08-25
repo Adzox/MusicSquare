@@ -46,6 +46,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/card_title"
+            android:layout_marginTop="10dp"
             android:text="Content" />
 
         <TextView
@@ -53,6 +54,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/card_content"
+            android:layout_marginTop="5dp"
             android:text="Extra" />
 
     </RelativeLayout>
