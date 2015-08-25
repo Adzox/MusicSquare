@@ -21,6 +21,7 @@ import java.util.List;
 
 import project.tddd80.keval992.liu.ida.se.navigationbase.R;
 import project.tddd80.keval992.liu.ida.se.navigationbase.adapters.CardViewHolder;
+import project.tddd80.keval992.liu.ida.se.navigationbase.adapters.CommentRecyclerViewAdapter;
 import project.tddd80.keval992.liu.ida.se.navigationbase.main.ResultsReceiver;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.CardViewModel;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Comment;
@@ -45,6 +46,7 @@ public class CommentListFragment extends ModelListFragment<Comment> {
 
     public static final CommentListFragment newInstance(Post post) {
         CommentListFragment commentListFragment = new CommentListFragment();
+        commentListFragment.setModelRecyclerViewAdapterClass(CommentRecyclerViewAdapter.class);
         commentListFragment.post = post;
         return commentListFragment;
     }
