@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ColorPrimary">#607D8B</color>
-    <color name="ColorPrimaryDark">#000</color>
-    <color name="tabsScrollColor">#000</color>
+    <color name="ColorPrimary">#CCBFDA</color>
+    <color name="ColorPrimaryDark">#7F5EA7</color>
+    <color name="tabsScrollColor">#d8000000</color>
     <color name="linkColour">#025AEE</color>
     <color name="normalColor">#f1f1f1</color>
     <color name="toogleColor">#ffff81</color>
