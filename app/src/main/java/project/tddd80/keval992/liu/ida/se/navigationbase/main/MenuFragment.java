@@ -147,7 +147,7 @@ public class MenuFragment extends Fragment implements NavigationView.OnNavigatio
                 break;
             */
             case R.id.navigator_logout:
-                LoginInfo.logout();
+                LoginInfo.logout(getActivity());
                 MenuFragment menuFragment = MenuFragment.normalMode();
                 getFragmentManager().beginTransaction()
                         .replace(R.id.container, menuFragment)

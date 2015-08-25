@@ -15,11 +15,16 @@ public class LoginInfo implements Serializable {
     private static final String LOGGED_IN = "Logged in";
     private static final String ADVANCED_USER = "Advanced user";
     private static String registrationId;
-    private static LoginInfo loginInfo = new LoginInfo(-1, false);
+    private static LoginInfo loginInfo = new LoginInfo();
     ;
     private static boolean hasLoggedIn;
     private int userId;
     private boolean isAdvancedUser;
+
+    private LoginInfo() {
+        this.userId = -1;
+        this.isAdvancedUser = false;
+    }
 
     private LoginInfo(int userId, boolean isAdvancedUser) {
         this.userId = userId;
@@ -31,8 +36,10 @@ public class LoginInfo implements Serializable {
         hasLoggedIn = true;
     }
 
-    public static void logout() {
+    public static void logout(Activity activity) {
+        loginInfo = new LoginInfo();
         hasLoggedIn = false;
+        saveToPreferences(activity);
     }
 
     public static boolean hasLoggedIn() {
