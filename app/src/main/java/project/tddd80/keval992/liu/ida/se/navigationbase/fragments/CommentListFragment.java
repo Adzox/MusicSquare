@@ -1,7 +1,6 @@
 package project.tddd80.keval992.liu.ida.se.navigationbase.fragments;
 
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,22 +69,17 @@ public class CommentListFragment extends ModelListFragment<Comment> {
     private void initTopContainer(FrameLayout frameLayout, LayoutInflater layoutInflater, ViewGroup viewGroup) {
         LinearLayout linearLayout = new LinearLayout(getActivity());
         linearLayout.setOrientation(LinearLayout.VERTICAL);
-        View v = layoutInflater.inflate(R.layout.layout_card, viewGroup);
+        View v = layoutInflater.inflate(R.layout.layout_card, linearLayout);
         CardViewHolder cardViewHolder = new CardViewHolder(v);
         cardViewHolder.setCardViewModel(new CardViewModel(post));
-        linearLayout.addView(v);
-        CardView cv = (CardView) layoutInflater.inflate(R.layout.empty_card, viewGroup);
-        initCardView(cv);
-        linearLayout.addView(cv);
+        ViewGroup cv = (ViewGroup) ((ViewGroup) layoutInflater.inflate(R.layout.like_button, linearLayout)).findViewById(R.id.empty_card);
+        initCardView((ViewGroup) cv.findViewById(R.id.like_container));
         frameLayout.addView(linearLayout);
     }
 
-    private void initCardView(CardView view) {
-        LinearLayout linearLayout = new LinearLayout(getActivity());
-        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-        final TextView textView = new TextView(getActivity());
-        textView.setText("Likes: ?");
-        final Button button = new Button(getActivity());
+    private void initCardView(ViewGroup viewGroup) {
+        final TextView textView = (TextView) viewGroup.findViewById(R.id.like_text);
+        final Button button = (Button) viewGroup.findViewById(R.id.like_button);
         initLikeButton(button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
