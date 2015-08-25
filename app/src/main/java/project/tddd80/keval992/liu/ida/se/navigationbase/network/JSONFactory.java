@@ -186,4 +186,15 @@ public final class JSONFactory {
         }
         return createSendFormat("likes", object);
     }
+
+    public static JSONObject createPagePostsData(int pageId) {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("ownerId", pageId);
+            addRequesterData(object);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return createSendFormat("likes", object);
+    }
 }

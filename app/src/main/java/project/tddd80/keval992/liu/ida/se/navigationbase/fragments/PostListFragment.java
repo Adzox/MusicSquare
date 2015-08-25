@@ -78,7 +78,7 @@ public class PostListFragment extends ModelListFragment<Post> {
     }
 
     private void initTopContainer(FrameLayout frameLayout, LayoutInflater inflater, ViewGroup viewGroup) {
-        View v = inflater.inflate(R.layout.layout_text_button, viewGroup);
+        View v = inflater.inflate(R.layout.layout_text_button, null);
         final EditText editText = (EditText) v.findViewById(R.id.text_field);
         editText.setHint("Write a new post...");
         Button button = (Button) v.findViewById(R.id.send_button);
@@ -88,6 +88,7 @@ public class PostListFragment extends ModelListFragment<Post> {
                 createPost(editText.getText().toString());
             }
         });
+        frameLayout.addView(v);
     }
 
     private void createPost(String message) {
@@ -125,6 +126,13 @@ public class PostListFragment extends ModelListFragment<Post> {
                 }.execute(JSONFactory.createFavoriteNewsData(NUMBER_OF_POSTS));
                 break;
             case MODE_PAGE_POSTS:
+                new HttpRequestTask("posts") {
+
+                    @Override
+                    protected void atPostExecute(JSONObject jsonObject) {
+                        onItemsReceived(jsonObject);
+                    }
+                }.execute(JSONFactory.createPagePostsData(page.getId()));
                 break;
         }
     }
