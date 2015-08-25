@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import project.tddd80.keval992.liu.ida.se.navigationbase.R;
 import project.tddd80.keval992.liu.ida.se.navigationbase.fragments.LoginFragment;
@@ -29,6 +30,7 @@ public class MenuFragment extends Fragment implements NavigationView.OnNavigatio
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+    private TextView headerText;
     private int mode = 0;
 
     public MenuFragment() {
@@ -79,6 +81,12 @@ public class MenuFragment extends Fragment implements NavigationView.OnNavigatio
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         NavigationView navigationView = (NavigationView) view.findViewById(R.id.menu_drawer);
         navigationView.setNavigationItemSelectedListener(this);
+        headerText = (TextView) (navigationView.findViewById(R.id.header)).findViewById(R.id.header_text);
+        if (LoginInfo.hasLoggedIn()) {
+            headerText.setText("Logged in!");
+        } else {
+            headerText.setText("Sign up/Login to enable more features!");
+        }
         // SETTING THE NEWS FRAGMENT AS THE FIRST FRAGMENT!
         SlidingFragment slidingFragment = new SlidingFragment() {
             @Override
