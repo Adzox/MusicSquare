@@ -79,6 +79,20 @@ public class MenuFragment extends Fragment implements NavigationView.OnNavigatio
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         NavigationView navigationView = (NavigationView) view.findViewById(R.id.menu_drawer);
         navigationView.setNavigationItemSelectedListener(this);
+        // SETTING THE NEWS FRAGMENT AS THE FIRST FRAGMENT!
+        SlidingFragment slidingFragment = new SlidingFragment() {
+            @Override
+            protected void initAdapter() {
+                addFragment("Global News", PostListFragment.newInstanceGlobal());
+                if (LoginInfo.hasLoggedIn()) {
+                    addFragment("News from favorites", PostListFragment.newInstanceFavorites());
+                }
+            }
+        };
+        getFragmentManager().beginTransaction()
+                .add(R.id.menu_content, slidingFragment)
+                .addToBackStack(null)
+                .commit();
         return view;
     }
 
