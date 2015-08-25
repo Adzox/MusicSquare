@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,7 +23,8 @@ import project.tddd80.keval992.liu.ida.se.navigationbase.network.JSONParser;
  */
 public class RegisterFragment extends Fragment implements View.OnClickListener {
 
-    private EditText username, name, password, repeated, location, information;
+    private EditText username, name, password, repeated, information;
+    private AutoCompleteTextView location;
     private boolean advanced = false;
 
     public RegisterFragment() {
@@ -39,7 +41,13 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         View view;
         if (advanced) {
             view = inflater.inflate(R.layout.fragment_register_advanced, container, false);
-            location = (EditText) view.findViewById(R.id.location);
+            location = (AutoCompleteTextView) view.findViewById(R.id.location);
+            ((Button) view.findViewById(R.id.currentLocation)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
             information = (EditText) view.findViewById(R.id.information);
         } else {
             view = inflater.inflate(R.layout.fragment_register, container, false);
