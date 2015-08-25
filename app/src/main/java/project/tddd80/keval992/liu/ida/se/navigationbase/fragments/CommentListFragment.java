@@ -79,6 +79,7 @@ public class CommentListFragment extends ModelListFragment<Comment> {
 
     private void initCardView(ViewGroup viewGroup) {
         final TextView textView = (TextView) viewGroup.findViewById(R.id.like_text);
+        fetchLikeCount(textView);
         final Button button = (Button) viewGroup.findViewById(R.id.like_button);
         initLikeButton(button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +138,7 @@ public class CommentListFragment extends ModelListFragment<Comment> {
     }
 
     private void initBottomContainer(FrameLayout frameLayout, LayoutInflater layoutInflater, ViewGroup viewGroup) {
-        View v = layoutInflater.inflate(R.layout.layout_text_button, viewGroup);
+        View v = layoutInflater.inflate(R.layout.layout_text_button, null);
         comment = (EditText) v.findViewById(R.id.text_field);
         Button button = (Button) v.findViewById(R.id.send_button);
         button.setText("Send");
@@ -147,6 +148,7 @@ public class CommentListFragment extends ModelListFragment<Comment> {
                 sendComment();
             }
         });
+        frameLayout.addView(v);
     }
 
     private void sendComment() {
