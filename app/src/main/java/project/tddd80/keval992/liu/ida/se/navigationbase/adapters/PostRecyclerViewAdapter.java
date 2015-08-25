@@ -11,6 +11,7 @@ import project.tddd80.keval992.liu.ida.se.navigationbase.fragments.CommentListFr
 import project.tddd80.keval992.liu.ida.se.navigationbase.fragments.PageFragment;
 import project.tddd80.keval992.liu.ida.se.navigationbase.fragments.PostListFragment;
 import project.tddd80.keval992.liu.ida.se.navigationbase.fragments.UserListFragment;
+import project.tddd80.keval992.liu.ida.se.navigationbase.main.LoginInfo;
 import project.tddd80.keval992.liu.ida.se.navigationbase.main.sliders.SlidingFragment;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Post;
 
@@ -27,7 +28,11 @@ public class PostRecyclerViewAdapter extends ModelRecyclerViewAdapter<Post> {
     public void onBindViewHolder(final ModelCardViewHolder holder, int position) {
         Post post = getModels().get(position);
         post.getSender().setProfileImage(holder.image);
-        holder.title.setText(post.getSender().getBaseUser().getName());
+        String ending = "";
+        if (post.getSender().getBaseUser().getId() == LoginInfo.getUserId()) {
+            ending = " (me)";
+        }
+        holder.title.setText(post.getSender().getBaseUser().getName() + ending);
         holder.title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
