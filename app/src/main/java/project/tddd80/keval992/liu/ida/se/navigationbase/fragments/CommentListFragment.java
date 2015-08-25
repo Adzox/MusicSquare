@@ -52,7 +52,7 @@ public class CommentListFragment extends ModelListFragment<Comment> {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        loadModels();
+        fetchComments();
     }
 
     @Override
@@ -164,12 +164,8 @@ public class CommentListFragment extends ModelListFragment<Comment> {
         }.execute(JSONFactory.createNewComment(text, post.getId()));
     }
 
-    public final void loadModels() {
-        ResultsReceiver.newSearch();
-        fetchComments();
-    }
-
     private void fetchComments() {
+        ResultsReceiver.newSearch();
         final List<Comment> comments = new ArrayList<>();
         new HttpRequestTask("comments", getActivity()) {
 
