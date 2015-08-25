@@ -37,6 +37,7 @@ public class CommentRecyclerViewAdapter extends ModelRecyclerViewAdapter<Comment
                 // TO USER PROFILE
             }
         });
+        holder.subtitle.setText("");
         holder.content.setText(comment.getMessage());
         holder.extra.setText(comment.getDateSent());
     }
