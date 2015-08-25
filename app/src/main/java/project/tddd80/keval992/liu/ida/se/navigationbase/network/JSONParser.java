@@ -183,8 +183,8 @@ public final class JSONParser {
                     parsePage(post.getJSONObject(2).getJSONArray("page")), p.getString("message"), false);
         } else {
             JSONObject l = post.getJSONObject(3);
-            return new Post(p.getInt("id"), p.getString("dateSent"), parseUser(post.getJSONArray(1)),
-                    parsePage(post.getJSONArray(2)), p.getString("message"), l.getBoolean("like"));
+            return new Post(p.getInt("id"), p.getString("dateSent"), parseUser(post.getJSONObject(1).getJSONArray("user")),
+                    parsePage(post.getJSONObject(2).getJSONArray("page")), p.getString("message"), l.getBoolean("like"));
         }
     }
 

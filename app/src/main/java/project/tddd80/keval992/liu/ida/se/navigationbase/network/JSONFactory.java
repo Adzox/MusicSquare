@@ -133,6 +133,7 @@ public final class JSONFactory {
         JSONObject object = new JSONObject();
         try {
             object.put("number", numberOfPosts);
+            addRequesterData(object);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -142,6 +143,7 @@ public final class JSONFactory {
     public static JSONObject createFavoriteNewsData(int numberOfPosts) {
         JSONObject object = new JSONObject();
         try {
+            addRequesterData(object);
             object.put("number", numberOfPosts);
             object.put("id", LoginInfo.getUserId());
         } catch (JSONException e) {
