@@ -65,9 +65,11 @@ public class LoginFragment extends Fragment {
                     JSONParser.extractLoginData(getActivity(), jsonObject);
                     MenuFragment menuFragment;
                     if (LoginInfo.isAdvancedUser()) {
+                        System.out.println("ADVANCD MODE");
                         ((MainActivity) LoginFragment.this.getActivity()).registerGcm();
                         menuFragment = MenuFragment.advancedMode();
                     } else {
+                        System.out.println("BASIC");
                         menuFragment = MenuFragment.basicMode();
                     }
                     getFragmentManager().beginTransaction()

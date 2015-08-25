@@ -20,6 +20,7 @@ import java.util.List;
 
 import project.tddd80.keval992.liu.ida.se.navigationbase.R;
 import project.tddd80.keval992.liu.ida.se.navigationbase.adapters.PostRecyclerViewAdapter;
+import project.tddd80.keval992.liu.ida.se.navigationbase.main.LoginInfo;
 import project.tddd80.keval992.liu.ida.se.navigationbase.main.ResultsReceiver;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Page;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Post;
@@ -70,7 +71,7 @@ public class PostListFragment extends ModelListFragment<Post> {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        if (mode == MODE_PAGE_POSTS && page != null && page.isUserMember()) {
+        if (mode == MODE_PAGE_POSTS && LoginInfo.hasLoggedIn() && page != null && page.isUserMember()) {
             FrameLayout topContainer = (FrameLayout) view.findViewById(R.id.topContainer);
             initTopContainer(topContainer, inflater, container);
         }

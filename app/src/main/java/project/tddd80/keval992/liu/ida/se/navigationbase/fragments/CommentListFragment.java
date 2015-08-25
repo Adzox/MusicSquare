@@ -21,6 +21,7 @@ import java.util.List;
 import project.tddd80.keval992.liu.ida.se.navigationbase.R;
 import project.tddd80.keval992.liu.ida.se.navigationbase.adapters.CardViewHolder;
 import project.tddd80.keval992.liu.ida.se.navigationbase.adapters.CommentRecyclerViewAdapter;
+import project.tddd80.keval992.liu.ida.se.navigationbase.main.LoginInfo;
 import project.tddd80.keval992.liu.ida.se.navigationbase.main.ResultsReceiver;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.CardViewModel;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Comment;
@@ -90,12 +91,17 @@ public class CommentListFragment extends ModelListFragment<Comment> {
     }
 
     private void initLikeButton(Button button) {
-        if (post.isLiked()) {
-            button.setText("Liked!");
-            button.setTextColor(getResources().getColor(R.color.toogleColor));
+        if (LoginInfo.hasLoggedIn()) {
+            if (post.isLiked()) {
+                button.setText("Liked!");
+                button.setTextColor(getResources().getColor(R.color.toogleColor));
+            } else {
+                button.setText("Like");
+                button.setTextColor(getResources().getColor(R.color.normalColor));
+            }
         } else {
-            button.setText("Like");
-            button.setTextColor(getResources().getColor(R.color.normalColor));
+            button.setVisibility(View.INVISIBLE);
+            button.setEnabled(false);
         }
     }
 
@@ -137,17 +143,19 @@ public class CommentListFragment extends ModelListFragment<Comment> {
     }
 
     private void initBottomContainer(FrameLayout frameLayout, LayoutInflater layoutInflater, ViewGroup viewGroup) {
-        View v = layoutInflater.inflate(R.layout.layout_text_button, null);
-        comment = (EditText) v.findViewById(R.id.text_field);
-        Button button = (Button) v.findViewById(R.id.send_button);
-        button.setText("Send");
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendComment();
-            }
-        });
-        frameLayout.addView(v);
+        if (LoginInfo.hasLoggedIn()) {
+            View v = layoutInflater.inflate(R.layout.layout_text_button, null);
+            comment = (EditText) v.findViewById(R.id.text_field);
+            Button button = (Button) v.findViewById(R.id.send_button);
+            button.setText("Send");
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sendComment();
+                }
+            });
+            frameLayout.addView(v);
+        }
     }
 
     private void sendComment() {
