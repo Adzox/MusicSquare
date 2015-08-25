@@ -1,5 +1,7 @@
 package project.tddd80.keval992.liu.ida.se.navigationbase.adapters;
 
+import android.support.v4.app.FragmentActivity;
+
 import java.util.List;
 
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.BaseUser;
@@ -10,8 +12,8 @@ import project.tddd80.keval992.liu.ida.se.navigationbase.models.User;
  */
 public class UserRecyclerViewAdapter extends ModelRecyclerViewAdapter<User> {
 
-    public UserRecyclerViewAdapter(List<User> pages) {
-        super(pages);
+    public UserRecyclerViewAdapter(List<User> pages, FragmentActivity fragmentActivity) {
+        super(pages, fragmentActivity);
     }
 
     @Override

@@ -2,7 +2,6 @@ package project.tddd80.keval992.liu.ida.se.navigationbase.fragments;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -153,19 +152,5 @@ public class PostListFragment extends ModelListFragment<Post> {
             }
         }
         setItems(posts);
-    }
-
-    @Override
-    protected void itemClicked(View view, int position) {
-        if (view.getId() == R.id.card_title) {
-            System.out.println("CARD TITLE");
-        } else if (view.getId() == R.id.card_subtitle) {
-            System.out.println("CARD SUBTITLE");
-        } else {
-            Fragment fragment = CommentListFragment.newInstance(getItem(position));
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.menu_content, fragment)
-                    .commit();
-        }
     }
 }

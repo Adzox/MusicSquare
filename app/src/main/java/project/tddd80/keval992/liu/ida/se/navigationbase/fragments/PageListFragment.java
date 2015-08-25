@@ -18,7 +18,6 @@ import java.util.List;
 import project.tddd80.keval992.liu.ida.se.navigationbase.R;
 import project.tddd80.keval992.liu.ida.se.navigationbase.adapters.PageRecyclerViewAdapter;
 import project.tddd80.keval992.liu.ida.se.navigationbase.main.ResultsReceiver;
-import project.tddd80.keval992.liu.ida.se.navigationbase.main.sliders.SlidingFragment;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Page;
 import project.tddd80.keval992.liu.ida.se.navigationbase.network.HttpRequestTask;
 import project.tddd80.keval992.liu.ida.se.navigationbase.network.JSONFactory;
@@ -102,21 +101,5 @@ public class PageListFragment extends ModelListFragment<Page> {
                 }
             }
         }.execute(JSONFactory.createIdData());
-    }
-
-    @Override
-    protected void itemClicked(View view, int position) {
-        final Page page = getItem(position);
-        SlidingFragment slidingFragment = new SlidingFragment() {
-            @Override
-            protected void initAdapter() {
-                addFragment("Information", PageFragment.newInstance(page));
-                addFragment("Members", UserListFragment.newInstance(page));
-                addFragment("Posts", PostListFragment.newInstance(page));
-            }
-        };
-        getFragmentManager().beginTransaction()
-                .replace(R.id.menu_content, slidingFragment)
-                .commit();
     }
 }

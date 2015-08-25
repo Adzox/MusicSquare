@@ -1,5 +1,7 @@
 package project.tddd80.keval992.liu.ida.se.navigationbase.adapters;
 
+import android.support.v4.app.FragmentActivity;
+
 import java.util.List;
 
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Page;
@@ -9,8 +11,8 @@ import project.tddd80.keval992.liu.ida.se.navigationbase.models.Page;
  */
 public class PageRecyclerViewAdapter extends ModelRecyclerViewAdapter<Page> {
 
-    public PageRecyclerViewAdapter(List<Page> pages) {
-        super(pages);
+    public PageRecyclerViewAdapter(List<Page> pages, FragmentActivity fragmentActivity) {
+        super(pages, fragmentActivity);
     }
 
     @Override
@@ -22,4 +24,6 @@ public class PageRecyclerViewAdapter extends ModelRecyclerViewAdapter<Page> {
         holder.content.setText("");
         holder.extra.setText(page.getLocation());
     }
+
+
 }

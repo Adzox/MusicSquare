@@ -3,6 +3,7 @@ package project.tddd80.keval992.liu.ida.se.navigationbase.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,13 +42,6 @@ public abstract class ModelListFragment<Model extends Serializable> extends Frag
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_model_list, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.model_list_list);
-        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(),
-                new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        ModelListFragment.this.itemClicked(view, position);
-                    }
-                }));
         setUpRecyclerView();
         return view;
     }
@@ -77,7 +71,8 @@ public abstract class ModelListFragment<Model extends Serializable> extends Frag
     // first argument a list, the likelyhood of this method failing is slim.
     private final ModelRecyclerViewAdapter<Model> getModelRecyclerViewAdapter(List<Model> models) {
         try {
-            return (ModelRecyclerViewAdapter<Model>) modelRecyclerViewAdapterClass.getConstructor(List.class).newInstance(models);
+            return (ModelRecyclerViewAdapter<Model>) modelRecyclerViewAdapterClass.getConstructor(
+                    List.class, FragmentActivity.class).newInstance(models, getActivity());
         } catch (java.lang.InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -89,6 +84,4 @@ public abstract class ModelListFragment<Model extends Serializable> extends Frag
         }
         return null;
     }
-
-    protected abstract void itemClicked(View view, int position);
 }

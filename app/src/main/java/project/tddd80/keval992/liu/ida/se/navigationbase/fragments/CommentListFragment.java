@@ -194,9 +194,4 @@ public class CommentListFragment extends ModelListFragment<Comment> {
             }
         }.execute(JSONFactory.createPostIdData(post.getId()));
     }
-
-    @Override
-    protected void itemClicked(View view, int position) {
-        // GO TO USER PROFILE
-    }
 }

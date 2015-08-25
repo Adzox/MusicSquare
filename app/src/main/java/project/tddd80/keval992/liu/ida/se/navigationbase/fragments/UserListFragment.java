@@ -99,9 +99,4 @@ public class UserListFragment extends ModelListFragment {
         super.onStart();
         setItems(users);
     }
-
-    @Override
-    protected void itemClicked(View view, int position) {
-        // GO TO USERS PAGE ON CLICK.
-    }
 }

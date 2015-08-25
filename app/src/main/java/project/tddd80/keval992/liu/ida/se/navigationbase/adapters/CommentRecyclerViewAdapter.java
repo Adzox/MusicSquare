@@ -1,5 +1,7 @@
 package project.tddd80.keval992.liu.ida.se.navigationbase.adapters;
 
+import android.support.v4.app.FragmentActivity;
+
 import java.util.List;
 
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.BaseUser;
@@ -12,8 +14,8 @@ import project.tddd80.keval992.liu.ida.se.navigationbase.models.Post;
  */
 public class CommentRecyclerViewAdapter extends ModelRecyclerViewAdapter<Comment> {
 
-    public CommentRecyclerViewAdapter(List<Comment> comments) {
-        super(comments);
+    public CommentRecyclerViewAdapter(List<Comment> comments, FragmentActivity fragmentActivity) {
+        super(comments, fragmentActivity);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package project.tddd80.keval992.liu.ida.se.navigationbase.adapters;
 
+import android.support.v4.app.FragmentActivity;
+
 import java.util.List;
 
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.CardViewModel;
@@ -9,8 +11,8 @@ import project.tddd80.keval992.liu.ida.se.navigationbase.models.CardViewModel;
  */
 public class CardViewModelRecyclerViewAdapter extends ModelRecyclerViewAdapter<CardViewModel> {
 
-    public CardViewModelRecyclerViewAdapter(List<CardViewModel> cardViewModels) {
-        super(cardViewModels);
+    public CardViewModelRecyclerViewAdapter(List<CardViewModel> cardViewModels, FragmentActivity fragmentActivity) {
+        super(cardViewModels, fragmentActivity);
     }
 
     @Override

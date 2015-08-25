@@ -1,5 +1,6 @@
 package project.tddd80.keval992.liu.ida.se.navigationbase.adapters;
 
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +18,11 @@ public abstract class ModelRecyclerViewAdapter<Model extends Serializable> exten
         RecyclerView.Adapter<ModelRecyclerViewAdapter.ModelCardViewHolder> {
 
     private List<Model> models;
+    private FragmentActivity activity;
 
-    public ModelRecyclerViewAdapter(List<Model> models) {
+    public ModelRecyclerViewAdapter(List<Model> models, FragmentActivity fragmentActivity) {
         this.models = models;
+        this.activity = fragmentActivity;
     }
 
     @Override
@@ -36,6 +39,10 @@ public abstract class ModelRecyclerViewAdapter<Model extends Serializable> exten
 
     public List<Model> getModels() {
         return models;
+    }
+
+    public FragmentActivity getActivity() {
+        return activity;
     }
 
     public static class ModelCardViewHolder extends CardViewHolder {
