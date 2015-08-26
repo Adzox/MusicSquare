@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class AddressArrayAdapter extends ArrayAdapter<String> {
 
-    public AddressArrayAdapter(Context context, int resource, List<String> objects) {
-        super(context, resource, objects);
+    public AddressArrayAdapter(Context context, int resource, int textViewResourceId, List<String> objects) {
+        super(context, resource, textViewResourceId, objects);
     }
 
     public final void setItems(List<Address> addresses) {

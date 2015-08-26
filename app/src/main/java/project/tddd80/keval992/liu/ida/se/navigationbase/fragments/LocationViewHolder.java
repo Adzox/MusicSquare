@@ -28,7 +28,7 @@ public class LocationViewHolder {
     private final AddressArrayAdapter adapter;
 
     public LocationViewHolder(View view, final Activity activity) {
-        adapter = new AddressArrayAdapter(activity, R.layout.text_layout, new ArrayList<String>());
+        adapter = new AddressArrayAdapter(activity, R.layout.text_layout, R.id.textView, new ArrayList<String>());
         location = (AutoCompleteTextView) view.findViewById(R.id.location);
         ((Button) view.findViewById(R.id.currentLocation)).setOnClickListener(new View.OnClickListener() {
             @Override
