@@ -91,7 +91,6 @@ public class PageFragment extends Fragment implements View.OnClickListener {
                 }
             }
         }.execute(JSONFactory.createFavoriteData(page.getId()));
-
     }
 
     private void initFavoriteButton() {
