@@ -13,6 +13,7 @@ import android.widget.TextView;
 import org.json.JSONObject;
 
 import project.tddd80.keval992.liu.ida.se.navigationbase.R;
+import project.tddd80.keval992.liu.ida.se.navigationbase.main.LoginInfo;
 import project.tddd80.keval992.liu.ida.se.navigationbase.main.MapDialogFragment;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Page;
 import project.tddd80.keval992.liu.ida.se.navigationbase.network.HttpRequestTask;
@@ -94,7 +95,7 @@ public class PageFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initFavoriteButton() {
-        if (!page.isUserMember()) {
+        if (LoginInfo.hasLoggedIn() && !page.isUserMember()) {
             if (page.isHasUserFavorited()) {
                 setFavoritedOn();
             } else {
