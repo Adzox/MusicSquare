@@ -69,7 +69,7 @@ public class User implements Serializable {
     public void setProfileImage(ImageView imageView) {
         if (profileImage != null) {
             imageView.setImageBitmap(profileImage);
-        } else if (profilePath != null && profilePath != "") {
+        } else if (profilePath != null && profilePath.length() > 0) {
             ImageLoader imageLoader = new ImageLoader(imageView);
             imageLoader.setImageLoaderListener(imageLoaderListener);
             imageLoader.execute(profilePath);
