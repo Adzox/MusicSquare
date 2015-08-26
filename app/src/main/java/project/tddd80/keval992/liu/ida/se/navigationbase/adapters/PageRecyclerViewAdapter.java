@@ -9,6 +9,7 @@ import project.tddd80.keval992.liu.ida.se.navigationbase.R;
 import project.tddd80.keval992.liu.ida.se.navigationbase.fragments.PageFragment;
 import project.tddd80.keval992.liu.ida.se.navigationbase.fragments.PostListFragment;
 import project.tddd80.keval992.liu.ida.se.navigationbase.fragments.UserListFragment;
+import project.tddd80.keval992.liu.ida.se.navigationbase.main.MapDialogFragment;
 import project.tddd80.keval992.liu.ida.se.navigationbase.main.sliders.SlidingFragment;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Page;
 
@@ -29,6 +30,12 @@ public class PageRecyclerViewAdapter extends ModelRecyclerViewAdapter<Page> {
         holder.subtitle.setText(page.getType());
         holder.content.setText("");
         holder.extra.setText(page.getLocation());
+        holder.extra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMap(holder);
+            }
+        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,5 +58,11 @@ public class PageRecyclerViewAdapter extends ModelRecyclerViewAdapter<Page> {
                 .replace(R.id.menu_content, slidingFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    private void showMap(final ModelCardViewHolder holder) {
+        final Page page = getModels().get(holder.getLayoutPosition());
+        MapDialogFragment mapDialogFragment = MapDialogFragment.newInstance(page.getLocation(), page.getName());
+        mapDialogFragment.show(getActivity().getSupportFragmentManager(), MapDialogFragment.class.getSimpleName());
     }
 }

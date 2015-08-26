@@ -13,6 +13,7 @@ import android.widget.TextView;
 import org.json.JSONObject;
 
 import project.tddd80.keval992.liu.ida.se.navigationbase.R;
+import project.tddd80.keval992.liu.ida.se.navigationbase.main.MapDialogFragment;
 import project.tddd80.keval992.liu.ida.se.navigationbase.models.Page;
 import project.tddd80.keval992.liu.ida.se.navigationbase.network.HttpRequestTask;
 import project.tddd80.keval992.liu.ida.se.navigationbase.network.JSONFactory;
@@ -56,8 +57,8 @@ public class PageFragment extends Fragment implements View.OnClickListener {
         location = (TextView) linView.findViewById(R.id.location);
         location.setText(page.getLocation());
         // FOR MAPS
-        // location.setOnClickListener(this);
-        // location.setTextColor(getResources().getColor(R.color.linkColour));
+        location.setOnClickListener(this);
+        location.setTextColor(getResources().getColor(R.color.linkColour));
         favorite = (Button) linView.findViewById(R.id.favorite);
         favorite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,6 +133,7 @@ public class PageFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        // Go to Google Maps and show location on map with a marker.
+        MapDialogFragment mapDialogFragment = MapDialogFragment.newInstance(page.getLocation(), page.getName());
+        mapDialogFragment.show(getFragmentManager(), MapDialogFragment.class.getSimpleName());
     }
 }
