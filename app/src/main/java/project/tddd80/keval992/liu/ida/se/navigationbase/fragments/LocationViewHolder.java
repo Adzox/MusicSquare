@@ -70,7 +70,7 @@ public class LocationViewHolder {
                 String fullAddress = "";
                 Address address = addresses.get(0);
                 for (int n = 0; n < address.getMaxAddressLineIndex(); n++) {
-                    fullAddress += address.getAddressLine(n);
+                    fullAddress += address.getAddressLine(n) + " ";
                 }
                 location.setText(fullAddress);
             }
