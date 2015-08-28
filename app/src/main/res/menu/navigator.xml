@@ -7,19 +7,19 @@
             android:id="@+id/navigator_news"
             android:title="News" />
 
-        <item
+        <!--item
             android:id="@+id/navigator_search"
             android:icon="@drawable/ic_action_search"
-            android:title="Search" />
+            android:title="Search" /-->
 
         <item
             android:id="@+id/navigator_login"
             android:icon="@drawable/ic_action_user"
             android:title="Sign in" />
 
-        <item
+        <!--item
             android:id="@+id/navigator_about"
-            android:title="About" />
+            android:title="About" /-->
 
     </group>
 

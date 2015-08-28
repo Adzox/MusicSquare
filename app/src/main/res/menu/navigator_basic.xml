@@ -7,14 +7,14 @@
             android:id="@+id/navigator_news"
             android:title="News" />
 
-        <item
+        <!--item
             android:id="@+id/navigator_search"
             android:icon="@drawable/ic_action_search"
             android:title="Search" />
 
         <item
             android:id="@+id/navigator_profile"
-            android:title="Profile" />
+            android:title="Profile" /-->
 
         <item
             android:id="@+id/navigator_favorites"
@@ -25,9 +25,9 @@
             android:icon="@drawable/ic_action_user"
             android:title="Log out" />
 
-        <item
+        <!--item
             android:id="@+id/navigator_about"
-            android:title="About" />
+            android:title="About" /-->
 
     </group>
 

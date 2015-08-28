@@ -7,14 +7,14 @@
             android:id="@+id/navigator_news"
             android:title="News" />
 
-        <item
+        <!--item
             android:id="@+id/navigator_search"
             android:icon="@drawable/ic_action_search"
             android:title="Search" />
 
         <item
             android:id="@+id/navigator_profile"
-            android:title="Profile" />
+            android:title="Profile" /-->
 
         <item
             android:id="@+id/navigator_favorites"
@@ -24,18 +24,18 @@
             android:id="@+id/navigator_pages"
             android:title="Pages" />
 
-        <item
+        <!--item
             android:id="@+id/navigator_messages"
             android:icon="@drawable/ic_action_mail"
-            android:title="Messages" />
+            android:title="Messages" /-->
 
         <item
             android:id="@+id/navigator_logout"
             android:title="Logout" />
 
-        <item
+        <!--item
             android:id="@+id/navigator_about"
-            android:title="About" />
+            android:title="About" /-->
 
 
     </group>
