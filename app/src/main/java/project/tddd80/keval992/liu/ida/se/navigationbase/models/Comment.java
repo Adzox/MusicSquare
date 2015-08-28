@@ -12,6 +12,7 @@ public class Comment implements Serializable {
     private final String message;
     private Post post;
     private User sender;
+    private BaseUser baseSender;
 
     public Comment(int id, Post page, String dateSent, User sender, String message) {
         this.id = id;
@@ -19,6 +20,16 @@ public class Comment implements Serializable {
         this.dateSent = dateSent;
         this.sender = sender;
         this.message = message;
+        baseSender = null;
+    }
+
+    public Comment(int id, Post page, String dateSent, BaseUser sender, String message) {
+        this.id = id;
+        this.post = page;
+        this.dateSent = dateSent;
+        this.baseSender = sender;
+        this.message = message;
+        sender = null;
     }
 
     public int getId() {
@@ -35,6 +46,14 @@ public class Comment implements Serializable {
 
     public User getSender() {
         return sender;
+    }
+
+    public BaseUser getBaseSender() {
+        return baseSender;
+    }
+
+    public boolean isBaseSender() {
+        return baseSender != null;
     }
 
     public String getMessage() {

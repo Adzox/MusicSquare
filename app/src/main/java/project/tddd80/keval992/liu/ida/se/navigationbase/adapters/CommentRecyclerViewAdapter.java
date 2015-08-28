@@ -23,7 +23,12 @@ public class CommentRecyclerViewAdapter extends ModelRecyclerViewAdapter<Comment
     @Override
     public void onBindViewHolder(final ModelCardViewHolder holder, int position) {
         Comment comment = getModels().get(position);
-        BaseUser baseUser = comment.getSender().getBaseUser();
+        BaseUser baseUser;
+        if (comment.isBaseSender()) {
+            baseUser = comment.getBaseSender();
+        } else {
+            baseUser = comment.getSender().getBaseUser();
+        }
         Post post = comment.getPost();
         Page page = comment.getPost().getOwner();
         String ending = "";

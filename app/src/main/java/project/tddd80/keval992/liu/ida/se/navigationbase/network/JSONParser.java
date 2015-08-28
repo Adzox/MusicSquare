@@ -190,8 +190,13 @@ public final class JSONParser {
 
     private static Comment parseComment(JSONArray comment) throws JSONException {
         JSONObject c = comment.getJSONObject(0).getJSONObject("comment");
-        return new Comment(c.getInt("id"), Post.getPost(c.getInt("postId")), c.getString("dateSent"),
-                parseUser(comment.getJSONObject(1).getJSONArray("user")), c.getString("message"));
+        if (comment.getJSONObject(1).has("user")) {
+            return new Comment(c.getInt("id"), Post.getPost(c.getInt("postId")), c.getString("dateSent"),
+                    parseUser(comment.getJSONObject(1).getJSONArray("user")), c.getString("message"));
+        } else {
+            return new Comment(c.getInt("id"), Post.getPost(c.getInt("postId")), c.getString("dateSent"),
+                    parseBaseUser(comment.getJSONObject(1)), c.getString("message"));
+        }
     }
 
     private static Message parseMessage(JSONArray message) throws JSONException {
